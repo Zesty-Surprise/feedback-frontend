@@ -1,5 +1,6 @@
 <script>
-    // import "$app.postcss";
-    import Home from "$lib/components/Home.svelte";
+  import "../app.css";
+  import Home from "$lib/components/Home.svelte";
 </script>
-<Home/>
+
+<!-- website body -->
