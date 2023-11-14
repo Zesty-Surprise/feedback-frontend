@@ -1,31 +1,42 @@
-<script>
-    import { AppRail, AppRailTile, AppRailAnchor } from '@skeletonlabs/skeleton';
+<script lang="ts">
+    import { TabGroup, Tab } from '@skeletonlabs/skeleton';
+    let tabSet: number;
 
-    let currentTile = 0
-
-    let sideBarTile = "sideBarTile"
+    const sidebarItems = [
+        "General",
+        "Surveys",
+        "eNPS",
+        "Engagement",
+        "Templates"
+    ]
 </script>
 
-<div>
-    <AppRail>
-        <AppRailTile class="sideBarTile" bind:group={currentTile} name="tile-1" value={0} title="tile-1">
-            <svelte:fragment slot="lead">(icon)</svelte:fragment>
-            <span>Tile 1</span>
-        </AppRailTile>
-        <AppRailTile  class="sideBarTile" bind:group={currentTile} name="tile-2" value={1} title="tile-2">
-            <svelte:fragment slot="lead">(icon)</svelte:fragment>
-            <span>Tile 2</span>
-        </AppRailTile>
-        <AppRailTile bind:group={currentTile} name="tile-3" value={2} title="tile-3">
-            <svelte:fragment slot="lead">(icon)</svelte:fragment>
-            <span>Tile 3</span>
-        </AppRailTile>
-    </AppRail>
-</div>
-
+<TabGroup justify="justify-center" regionList="flex-col">
+        {#each sidebarItems as item, index}
+            <Tab bind:group={tabSet} name="tab1" value={index} active="bg-red-500" padding="px-10 py-4" rounded="rounded-md" hover="hover:bg-sky-700">
+                <div class="flex flex-row">
+                    <div class="pr-5">(icon)</div>
+                    <span>{item}</span>
+                </div>
+            </Tab>
+        {/each}
+	
+	<!-- Tab Panels --->
+	<svelte:fragment slot="panel">
+		{#if tabSet === 0}
+			(tab panel 1 contents)
+		{:else if tabSet === 1}
+			(tab panel 2 contents)
+		{:else if tabSet === 2}
+			(tab panel 3 contents)
+        {:else if tabSet === 3}
+			(tab panel 4 contents)
+        {:else if tabSet === 4}
+			(tab panel 5 contents)
+		{/if}
+	</svelte:fragment>
+</TabGroup>
+			
 <style>
-    .sideBarTile {
-        color: green;
-        background-color: red;
-    }
+
 </style>
