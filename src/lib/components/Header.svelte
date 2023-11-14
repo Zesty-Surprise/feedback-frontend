@@ -23,3 +23,27 @@
         </a>
     </div>  
 </div>
+
+<style>
+    .header__container {
+    align-items: center;
+    background-color: #FCF8F4;
+    color: black;
+    display: flex;  
+    height: fit-content;
+    justify-content: space-between;
+    padding: 8px 24px;
+    width: 100%;
+}
+
+.header__manager {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+.header__left-logo {
+    height: 32px;
+    width: 32px;
+}
+</style>
