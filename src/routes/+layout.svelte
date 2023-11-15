@@ -1,4 +1,4 @@
-<script>
+<script context="module">
   import "../app.css";
 
   import Header from "$lib/components/Header.svelte";
@@ -11,9 +11,9 @@
 
 <AppShell>
   <!-- add your own header :)-->
-  <svelte:fragment slot="header"><Header/></svelte:fragment>
+  <svelte:fragment slot="header"><Header /></svelte:fragment>
   <!-- add your own sidebar :)-->
-  <svelte:fragment slot="sidebarLeft"><Sidebar/></svelte:fragment>
+  <svelte:fragment slot="sidebarLeft"><Sidebar /></svelte:fragment>
   <!-- Router Slot -->
   <slot />
   <!-- ---- / ---- -->
