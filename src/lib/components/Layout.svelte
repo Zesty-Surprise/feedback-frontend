@@ -7,12 +7,26 @@
     import { AppShell } from "@skeletonlabs/skeleton";
 
     const sidebarItems = [
-        "General",
-        "Surveys",
-        "eNPS",
-        "Engagement",
-        "Templates"
-    ]
+    {
+        title: "General",
+        icon: "teenyicons:pie-chart-solid"
+    },
+    {
+        title: "Surveys",
+        icon: "mingcute:document-fill"
+    },
+    {
+        title: "eNPS",
+        icon: "ion:person"
+    },
+    {
+        title: "Engagement",
+        icon: "iconoir:percentage-square-solid"
+    },
+    {
+        title: "Templates",
+        icon: "heroicons-solid:template"
+    }]
 
 </script>
 
@@ -24,11 +38,12 @@
     <svelte:fragment slot="sidebarLeft">
         <TabGroup regionList="flex-col border-b-0 px-6">
             <p class="text-[#595959] text-xl px-2 py-5 font-semibold">
-                Home
+                Dashboard
             </p>
             {#each sidebarItems as item, index}
                 <Tab 
                 bind:group={tabSet}
+                class="my-2"
                 name="tab"
                 value={index}
                 active="bg-[#F5E5D3] text-[#de896e]"
@@ -38,8 +53,8 @@
                 flex="flex flex-row"
                 regionTab={index !== tabSet ? "text-[#595959] font-normal" : ""}>
                     <div class="flex items-center font-normal">
-                        <iconify-icon icon='teenyicons:pie-chart-solid' height=22 width=22 class="pr-5"></iconify-icon>
-                        <span>{item}</span>
+                        <iconify-icon icon={item.icon} height=24 width=24 class="pr-5"></iconify-icon>
+                        <span>{item.title}</span>
                     </div>
                 </Tab>
             {/each}
