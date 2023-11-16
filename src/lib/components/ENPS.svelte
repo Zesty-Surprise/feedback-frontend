@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import ApexCharts from "apexcharts";
-  import { FileButton } from "@skeletonlabs/skeleton";
   import { eNPSData } from "$lib/functions";
 
   let chartElement: HTMLDivElement; // The container where you want to render the chart
@@ -35,15 +34,14 @@
     chart.render();
     eNPSData();
   });
-
-// make variable for retrieved data
 </script>
+
 <div>
   <div class="flex justify-center">
     <h1 class="py-5">eNPS</h1>
   </div>
   <div class="p-5">
-    <FileButton>Filter</FileButton>
+    <button>Filter</button>
   </div>
 </div>
 
