@@ -2,11 +2,10 @@
   import 'iconify-icon'
 </script>
 
-<div class="header__container">
+<div class="header__container border-b-2 border-[#E6E8E8]">
     <div class="header__manager">
         <div class="header__left-logo-wrapper">
             <img src="/src/images/logo-small.svg" alt="Your Surprise"/>
-            <!-- <iconify-icon icon='tabler:gift' width=27 height=34></iconify-icon> -->
         </div>
         <div class="header__survey-manager">
             Survey Manager
