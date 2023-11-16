@@ -38,8 +38,6 @@
 
 // make variable for retrieved data
 </script>
-
-<p />
 <div>
   <div class="flex justify-center">
     <h1 class="py-5">eNPS</h1>

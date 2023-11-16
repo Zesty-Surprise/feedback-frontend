@@ -2,7 +2,6 @@ import { writable, derived } from "svelte/store";
 
 const apiData = writable([]);
 
-// change names
 export const drinkNames = derived(apiData, ($apiData) => {
     if ($apiData.drinks) {
       return $apiData.drinks.map((drink) => drink.strDrink);
@@ -22,3 +21,4 @@ export async function eNPSData() {
       return [];
     });
 }
+// https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Bourbon
