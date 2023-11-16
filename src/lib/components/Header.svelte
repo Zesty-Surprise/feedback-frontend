@@ -13,12 +13,12 @@
         </div>
     </div>
     <div class="header__logo">
-        <a href="#">
+        <a href="/">
             <img src="/src/images/logo.svg" alt="Your Surprise"/>
         </a>
     </div>
     <div class="header__login">
-        <a href="#">
+        <a href="/">
             <img src="/src/images/User.svg" alt="Login"/>
         </a>
     </div>  
