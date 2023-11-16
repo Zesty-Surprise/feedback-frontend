@@ -118,11 +118,11 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
-    left: 0;
+    /* left: 0; */
     margin-top: 32px;
-    position: absolute;
+    /* position: absolute;
     width: 100vw;
-    z-index: -1;
+    z-index: -1; */
   }
 
   .homepage__enps {

@@ -4,6 +4,7 @@
     import "../../app.css";
 
     import Header from "$lib/components/Header.svelte";
+    import Home from './Home.svelte';
     import { AppShell } from "@skeletonlabs/skeleton";
 
     const sidebarItems = [
@@ -63,7 +64,7 @@
     <!-- Tab Panels --->
     <div class="text-black">
         {#if tabSet === 0}
-            (General contents)
+            <Home />
         {:else if tabSet === 1}
             (Surveys contents)
         {:else if tabSet === 2}
