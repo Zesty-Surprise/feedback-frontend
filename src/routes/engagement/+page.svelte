@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Surveys from "$lib/components/Surveys.svelte";
+  import Engagement from "$lib/components/Engagement.svelte";
 </script>
 
 <!-- website body -->
-<Surveys />
+<Engagement />

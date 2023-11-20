@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Surveys from "$lib/components/Surveys.svelte";
+  import Enps from "$lib/components/Enps.svelte";
 </script>
 
 <!-- website body -->
-<Surveys />
+<Enps />

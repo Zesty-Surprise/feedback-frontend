@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Surveys from "$lib/components/Surveys.svelte";
+  import Templates from "$lib/components/Templates.svelte";
 </script>
 
 <!-- website body -->
-<Surveys />
+<Templates />
