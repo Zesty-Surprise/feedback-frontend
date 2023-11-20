@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TabGroup, Tab, TabAnchor } from "@skeletonlabs/skeleton";
+  import { TabGroup, TabAnchor } from "@skeletonlabs/skeleton";
   export let data;
 
   import "../app.css";

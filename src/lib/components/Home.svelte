@@ -209,6 +209,7 @@
 
   .homepage__percentage {
     color: black;
+    min-width: 48px;
   }
 
   .homepage__type {
