@@ -3,7 +3,7 @@
   import ApexCharts from "apexcharts";
   import Plotly from "plotly.js-dist-min";
 
-  let gaugeColour = ""
+  let gaugeColour = "";
   let espn = 55;
 
   if (espn <= 0) {
@@ -175,9 +175,10 @@
 
   .homepage__info {
     display: flex;
-    /* justify-content: space-evenly; */
-    justify-content: flex-start;
     gap: 160px;
+    justify-content: center;
+    left: -115px;
+    position: relative;
     width: 100%;
   }
 
