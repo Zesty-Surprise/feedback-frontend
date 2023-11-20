@@ -4,10 +4,10 @@
 
 <div class="header__container border-b-2 border-[#E6E8E8]">
     <div class="header__manager">
-        <div class="header__left-logo-wrapper">
+        <div class="w-6">
             <img src="/src/images/logo-small.svg" alt="Your Surprise"/>
         </div>
-        <div class="header__survey-manager">
+        <div class="text-sm">
             Survey Manager
         </div>
     </div>
@@ -38,11 +38,14 @@
 .header__manager {
     align-items: center;
     display: flex;
-    gap: 8px;
+    gap: 14px;
 }
 
-.header__left-logo {
-    height: 32px;
-    width: 32px;
+.header__logo {
+    width: 250px;
+}
+
+.header__login {
+    width: 35px;
 }
 </style>

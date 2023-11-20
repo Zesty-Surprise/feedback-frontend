@@ -37,13 +37,10 @@
     <!-- add your own sidebar :)-->
     <svelte:fragment slot="sidebarLeft">
         <TabGroup regionList="flex-col border-b-0 px-6">
-            <p class="text-[#595959] text-xl px-2 py-5 font-semibold">
-                Dashboard
-            </p>
             {#each sidebarItems as item, index}
                 <Tab 
                 bind:group={tabSet}
-                class="my-2"
+                class="mt-7"
                 name="tab"
                 value={index}
                 active="bg-[#F5E5D3] text-[#de896e]"
