@@ -44,7 +44,7 @@
                 name="tab"
                 value={index}
                 active="bg-[#F5E5D3] text-[#de896e]"
-                padding="px-8 py-4"
+                padding="px-7 py-4"
                 rounded="rounded-md"
                 hover="hover:bg-[#f5e5dd80]"
                 flex="flex flex-row"
