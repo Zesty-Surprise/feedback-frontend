@@ -32,7 +32,7 @@
         track: {
           background: "#e7e7e7",
           strokeWidth: "97%",
-          margin: 5, // margin is in pixels
+          margin: 10, // margin is in pixels
           dropShadow: {
             enabled: false,
             top: 2,
@@ -49,7 +49,7 @@
           value: {
             offsetY: -2,
             fontSize: "42px",
-            color: "white",
+            color: "#595959",
           },
         },
       },
@@ -60,15 +60,8 @@
       },
     },
     fill: {
-      type: "gradient",
-      gradient: {
-        shade: "light",
-        shadeIntensity: 0.4,
-        inverseColors: false,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 50, 53, 91],
-      },
+      type: "solid",
+      colors: ["#a1dbae"],
     },
     labels: ["Average Results"],
   }; // Customize this object with your chart options
