@@ -1,10 +1,22 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import ApexCharts from "apexcharts";
+  import Plotly from "plotly.js-dist-min";
+
+  let gaugeColour = ""
+  let espn = 55;
+
+  if (espn <= 0) {
+    gaugeColour = "#de896e";
+  } else if (espn < 20 && espn >= 1) {
+    gaugeColour = "yellow";
+  } else {
+    gaugeColour = "#00c100";
+  }
 
   let chartElement: HTMLDivElement; // The container where you want to render the chart
   let options = {
-    series: [76],
+    series: [76, 23, 1],
     chart: {
       type: "radialBar",
       offsetY: -20,
@@ -14,7 +26,7 @@
     },
     plotOptions: {
       radialBar: {
-        colors: ["#555", "#000", "#666"],
+        colors: ["#555", "#555", "#666"],
         startAngle: -90,
         endAngle: 90,
         track: {
@@ -65,6 +77,34 @@
     let chart = new ApexCharts(chartElement, options);
     chart.render();
   });
+
+  setTimeout(() => {
+    var data = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: espn,
+        title: { text: "eNPS" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: 75 },
+        gauge: {
+          axis: { range: [-100, 100] },
+          bar: { color: gaugeColour, thickness: 1 },
+          steps: [{ range: [-100, 100], color: "white" }],
+          bordercolor: "transparent",
+        },
+      },
+    ];
+
+    var layout = {
+      width: 550,
+      height: 325,
+      margin: { t: 0, b: 0 },
+      paper_bgcolor: "#FCF8F4",
+    };
+
+    Plotly.newPlot("asdf", data, layout);
+  }, 500);
 </script>
 
 <div class="homepage">
@@ -73,7 +113,8 @@
   </div>
   <div class="homepage__info">
     <div class="homepage__pie-chart-wrapper">
-      <div class="homepage__pie-chart" bind:this={chartElement} />
+      <!-- <div class="homepage__pie-chart" bind:this={chartElement} /> -->
+      <div id="asdf" style="background: none" />
     </div>
     <!-- second column -->
     <div class="homepage__stats">
@@ -111,23 +152,25 @@
       </div>
     </div>
   </div>
+  <div class="homepage__completed-by">
+    <span>Completed by <strong>192/411</strong></span>
+  </div>
 </div>
 
 <style>
   .homepage {
     display: flex;
     flex-direction: column;
+    justify-content: left;
     gap: 32px;
-    /* left: 0; */
-    margin-top: 32px;
-    /* position: absolute;
-    width: 100vw;
-    z-index: -1; */
   }
 
   .homepage__enps {
     display: flex;
     justify-content: center;
+    padding: 32px 0 64px;
+    position: relative;
+    left: -115px;
     width: 100%;
   }
 
@@ -140,7 +183,7 @@
   .homepage__info {
     display: flex;
     /* justify-content: space-evenly; */
-    justify-content: center;
+    justify-content: flex-start;
     gap: 160px;
     width: 100%;
   }
@@ -153,6 +196,7 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    justify-content: center;
   }
 
   .homepage__bar {
@@ -175,6 +219,14 @@
 
   .homepage__type {
     color: grey;
+  }
+
+  .homepage__completed-by {
+    display: flex;
+    justify-content: center;
+    padding: 80px 0 0;
+    position: relative;
+    left: -115px;
   }
 
   .green {

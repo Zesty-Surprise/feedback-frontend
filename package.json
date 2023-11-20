@@ -41,6 +41,9 @@
   "dependencies": {
     "apexcharts": "^3.44.0",
     "iconify-icon": "^1.0.8",
+    "plotly.js": "^2.27.1",
+    "plotly.js-dist": "^2.27.1",
+    "plotly.js-dist-min": "^2.27.1",
     "svelte-apexcharts": "^1.0.2"
   }
 }
