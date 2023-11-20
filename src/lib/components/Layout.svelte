@@ -10,6 +10,7 @@
   import Surveys from "$lib/components/Surveys.svelte";
   import Engagement from "$lib/components/Engagement.svelte";
   import Templates from "$lib/components/Templates.svelte";
+  import { Router, Link, Route } from "svelte-routing";
 
   const sidebarItems = [
     {
@@ -73,20 +74,28 @@
     </TabGroup>
   </svelte:fragment>
   <!-- Tab Panels --->
-  <div class="text-black">
+  <!-- <div class="text-black">
     {#if tabSet === 0}
-      <Home />
+      <Link to="/">Home</Link>
     {:else if tabSet === 1}
-      <Surveys />
+    <Link to="/">Surveys</Link>
     {:else if tabSet === 2}
-      <Enps />
+    <Link to="/enps">eNPS</Link>
     {:else if tabSet === 3}
-      <Engagement />
+    <Link to="/Engagement">Engagement</Link>
     {:else if tabSet === 4}
-      <Templates />
+    <Link to="/Templates">Templates</Link>
     {/if}
-  </div>
+  </div> -->
   <!-- Router Slot -->
+  <Router>
+    <!-- Define a route for the Home component -->
+    <Route path="/" component={Home} />
+    <Route path="/surveys" component={Surveys} />
+    <Route path="/enps" component={Enps} />
+    <Route path="/engagement" component={Engagement} />
+    <Route path="/templates" component={Templates} />
+  </Router>
   <slot />
   <!-- ---- / ---- -->
   <svelte:fragment slot="footer">Footer</svelte:fragment>
