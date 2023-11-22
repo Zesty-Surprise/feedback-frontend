@@ -21,4 +21,3 @@ export async function eNPSData() {
       return [];
     });
 }
-// https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Bourbon
