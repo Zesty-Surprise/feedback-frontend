@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Surveys from "$lib/components/Surveys.svelte";
+  import Surveys from "$lib/components/Surveys/Surveys.svelte";
 </script>
 
 <!-- website body -->

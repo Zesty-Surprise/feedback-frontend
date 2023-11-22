@@ -43,7 +43,7 @@
 
 <div class="homepage">
   <div class="homepage__enps">
-    <h1>eNPS</h1>
+    <h1>Latest survey</h1>
   </div>
   <div class="homepage__info">
     <div class="homepage__pie-chart-wrapper">
