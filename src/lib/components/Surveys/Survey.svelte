@@ -1,9 +1,10 @@
 <script lang="ts">
     export let title:string = "";
     export let date:string = "";
+    export let link:string = "";
 </script>
 
-<a href="/" class="flex flex-col min-w-fit min-h-fit mr-16 mt-16 hover:scale-105 duration-100">
+<a href={link} class="flex flex-col min-w-fit min-h-fit mr-16 mt-16 hover:scale-105 duration-100">
     <div class="h-52 w-52 bg-[#F5E5D3] rounded-lg">
         <slot/>
     </div>
