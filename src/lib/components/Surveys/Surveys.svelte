@@ -35,7 +35,7 @@
     },
   ];
 </script>
-<div class="flex flex-wrap justify-between pl-12 pr-16">
+<div class="flex flex-wrap justify-between ml-12 mr-16">
     {#each surveys as survey}
         <Survey title={survey.title} date={survey.date}/>
     {/each}
