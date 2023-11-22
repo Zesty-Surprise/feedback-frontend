@@ -37,24 +37,24 @@
 </script>
 
 <AppShell
-  slotPageContent="bg-[#FCF8F4]"
-  slotSidebarLeft="bg-[#FCF8F4]"
-  slotFooter="bg-[#FCF8F4]"
+  slotPageContent="bg-color-layout"
+  slotSidebarLeft="bg-color-layout"
+  slotFooter="bg-color-layout"
 >
   <!-- add your own header :)-->
   <svelte:fragment slot="header"><Header /></svelte:fragment>
   <!-- add your own sidebar :)-->
   <svelte:fragment slot="sidebarLeft">
-    <TabGroup regionList="flex-col border-b-0 px-6 text-[#595959]">
+    <TabGroup regionList="flex-col border-b-0 px-6 text-color-text">
       {#each sidebarItems as item, index}
         <TabAnchor
           class="mt-7"
           name="tab"
           value={index}
-          active="bg-[#F5E5D3] text-[#de896e]"
+          active="bg-color-highlight text-color-accent"
           padding="px-7 py-4"
           rounded="rounded-md"
-          hover="hover:bg-[#f5e5dd80]"
+          hover="hover:bg-color-hover"
           flex="flex flex-row"
           selected={data.pathname === item.url}
           href={item.url}
