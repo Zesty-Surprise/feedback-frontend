@@ -123,10 +123,6 @@
     width: 100%;
   }
 
-  .homepage__pie-chart {
-    width: 500px;
-  }
-
   .homepage__stats {
     display: flex;
     flex-direction: column;
