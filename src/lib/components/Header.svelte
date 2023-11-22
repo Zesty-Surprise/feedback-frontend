@@ -3,18 +3,16 @@
 </script>
 
 <div class="header__container border-b-2 border-[#E6E8E8]">
-    <div class="header__manager">
+    <a href="/" class="header__manager">
         <div class="w-6">
             <img src="/src/images/logo-small.svg" alt="Your Surprise"/>
         </div>
         <div class="text-sm">
             Survey Manager
         </div>
-    </div>
+    </a>
     <div class="header__logo">
-        <a href="/">
-            <img src="/src/images/logo.svg" alt="Your Surprise"/>
-        </a>
+        <img src="/src/images/logo.svg" alt="Your Surprise"/>
     </div>
     <div class="header__login">
         <a href="/">
