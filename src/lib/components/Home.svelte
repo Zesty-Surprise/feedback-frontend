@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import ApexCharts from "apexcharts";
   import Plotly from "plotly.js-dist-min";
 
   let gaugeColour = "";
@@ -13,63 +11,6 @@
   } else {
     gaugeColour = "#00c100";
   }
-
-  let chartElement: HTMLDivElement; // The container where you want to render the chart
-  let options = {
-    series: [76, 23, 1],
-    chart: {
-      type: "radialBar",
-      offsetY: -20,
-      sparkline: {
-        enabled: true,
-      },
-    },
-    plotOptions: {
-      radialBar: {
-        colors: ["#555", "#555", "#666"],
-        startAngle: -90,
-        endAngle: 90,
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 10, // margin is in pixels
-          dropShadow: {
-            enabled: false,
-            top: 2,
-            left: 0,
-            color: "#000",
-            opacity: 1,
-            blur: 2,
-          },
-        },
-        dataLabels: {
-          name: {
-            show: false,
-          },
-          value: {
-            offsetY: -2,
-            fontSize: "42px",
-            color: "#595959",
-          },
-        },
-      },
-    },
-    grid: {
-      padding: {
-        top: -10,
-      },
-    },
-    fill: {
-      type: "solid",
-      colors: ["#a1dbae"],
-    },
-    labels: ["Average Results"],
-  }; // Customize this object with your chart options
-
-  onMount(() => {
-    let chart = new ApexCharts(chartElement, options);
-    chart.render();
-  });
 
   setTimeout(() => {
     var data = [
