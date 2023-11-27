@@ -169,16 +169,22 @@
   {#each templates as template}
     <div class="bg-white shadow-md rounded-md text-center h-96">
       <div class="h-full flex items-center justify-center">
-        <div
-          class="flex items-center justify-center custom-color rounded-full h-12 w-12 mx-2"
-        >
-          <span class="text-white font-bold text-2xl">+</span>
-        </div>
-        <div
-          class="flex items-center justify-center custom-color rounded-full h-12 w-12 mx-2"
-        >
-          <span class="text-white font-bold text-2xl">^</span>
-        </div>
+        <a href="#" on:click={click}>
+          <div
+            class="flex items-center justify-center custom-color rounded-full h-12 w-12 mx-2"
+          >
+            <span class="text-black font-bold text-2xl">+</span>
+          </div>
+        </a>
+        <a href="#" on:click={click}>
+          <div
+            class="flex items-center justify-center custom-color rounded-full h-12 w-12 mx-2"
+          >
+            <span class="text-white font-bold text-2xl">
+              <img alt="edit" src="../src/images/edit.png" class="h-4 w-4" />
+            </span>
+          </div>
+        </a>
       </div>
       <p class="text-center text-lg font-bold text-black">{template.name}</p>
     </div>
