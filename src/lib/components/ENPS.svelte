@@ -3,7 +3,7 @@
   import Plotly from "plotly.js-dist-min";
   import FilterModal from "$lib/components/FilterModal.svelte";
 
-  let showModal = true;
+  let showModal = false;
 
   // Sample data for the bar chart
   var data = [
@@ -32,7 +32,7 @@
 
   // Layout settings for the chart
   var layout = {
-    height: 750,
+    height: window.screen.height - 175,
     width: window.screen.width - 275,
     yaxis: {
       range: [-100, 100],
