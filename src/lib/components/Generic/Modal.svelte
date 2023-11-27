@@ -9,7 +9,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
-  class="w-1/3 h-fit rounded-md bg-[#fcf8f4]"
+  class="w-1/3 h-fit rounded-md bg-color-layout"
   bind:this={dialog}
   on:close={() => (showModal = false)}
   on:click|self={() => dialog.close()}
