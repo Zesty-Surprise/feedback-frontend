@@ -155,7 +155,7 @@
 <div class="grid grid-cols-4 gap-10 mt-10 px-10">
   <div class="bg-white shadow-md rounded-md text-center h-96">
     <div class="h-full flex items-center justify-center">
-      <a href="#" on:click={click}>
+      <a href="href" on:click={click}>
         <div
           class="custom-color rounded-full h-12 w-12 flex items-center justify-center"
         >
@@ -169,14 +169,14 @@
   {#each templates as template}
     <div class="bg-white shadow-md rounded-md text-center h-96">
       <div class="h-full flex items-center justify-center">
-        <a href="#" on:click={click}>
+        <a href="href" on:click={click}>
           <div
             class="flex items-center justify-center custom-color rounded-full h-12 w-12 mx-2"
           >
             <span class="text-black font-bold text-2xl">+</span>
           </div>
         </a>
-        <a href="#" on:click={click}>
+        <a href="href" on:click={click}>
           <div
             class="flex items-center justify-center custom-color rounded-full h-12 w-12 mx-2"
           >
