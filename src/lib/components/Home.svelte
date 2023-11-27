@@ -37,7 +37,7 @@
       paper_bgcolor: "#FCF8F4",
     };
 
-    Plotly.newPlot("asdf", data, layout);
+    Plotly.newPlot("chart", data, layout);
   }, 500);
 </script>
 
@@ -48,7 +48,7 @@
   <div class="homepage__info">
     <div class="homepage__pie-chart-wrapper">
       <!-- <div class="homepage__pie-chart" bind:this={chartElement} /> -->
-      <div id="asdf" style="background: none" />
+      <div id="chart" style="background: none" />
     </div>
     <!-- second column -->
     <div class="homepage__stats">

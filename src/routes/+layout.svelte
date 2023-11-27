@@ -2,7 +2,7 @@
   import { TabGroup, TabAnchor } from "@skeletonlabs/skeleton";
   export let data;
 
-  import "../app.css";
+  import "$lib/app.css";
 
   import Header from "$lib/components/Header.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";

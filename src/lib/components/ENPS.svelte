@@ -1,6 +1,9 @@
 <script lang="ts">
   //   import { eNPSData } from "$lib/functions";
   import Plotly from "plotly.js-dist-min";
+  import FilterModal from "$lib/components/FilterModal.svelte";
+
+  let showModal = true;
 
   // Sample data for the bar chart
   var data = [
@@ -38,15 +41,21 @@
     plot_bgcolor: "#FCF8F4",
   };
 
+  function setModal() {
+    showModal = !showModal;
+  }
+
   // Create the bar chart using Plotly
   setTimeout(() => {
     Plotly.newPlot("barChart", data, layout);
   }, 1000);
-</script>
+</script>   
 
 <div class="subHeader">
-  <button class="button"
-    ><img src="/src/images/filter.svg" alt="Your Surprise" /><strong
+  <button 
+  class="button"
+  on:click={setModal}
+    ><img src="/src/images/filter.svg" alt="Zesty Surprise" /><strong
       >Filter</strong
     ></button
   >
@@ -54,6 +63,11 @@
 <div>
   <div id="barChart" />
 </div>
+{#if showModal}
+  <FilterModal
+    bind:showModal={showModal}
+  />
+{/if}
 
 <style>
   .subHeader {
