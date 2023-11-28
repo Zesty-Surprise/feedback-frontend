@@ -1,8 +1,7 @@
 <script lang="ts">
   import Templates from "$lib/components/Templates.svelte";
-  export let data;
-  console.log(data);
+  export let data:any;
 </script>
 
 <!-- website body -->
-<Templates />
+<Templates templates={data.templates}/>
