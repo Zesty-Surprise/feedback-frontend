@@ -113,7 +113,7 @@
       <div
         class="bg-color-accent rounded-full w-14 h-14 flex justify-center items-center"
       >
-        <iconify-icon icon="typcn:plus" width="48px" />
+        <iconify-icon class="text-white" icon="typcn:plus" width="48px"/>
       </div>
     </button>
   </Survey>
