@@ -142,13 +142,13 @@
 <style>
   .modal__wrapper {
     align-items: center;
-    background-color: rgba(200, 200, 200, .25);
+    background-color: rgba(200, 200, 200, 0.25);
     display: flex;
     height: 100vh;
     justify-content: center;
     left: 0;
     position: absolute;
-    top: 0; 
+    top: 0;
     width: 100vw;
     z-index: 10;
   }
@@ -205,31 +205,31 @@
     cursor: pointer;
     display: flex;
     position: relative;
-    padding-left: 30px; 
+    padding-left: 30px;
     align-items: center;
   }
 
   label:before {
-    content: "";
-    display: inline-block;
-    width: 36px; 
-    height: 36px; 
-    border: 3px solid black;
     background-color: white;
     border-radius: 5px;
+    border: 3px solid black;
+    content: "";
+    display: inline-block;
+    height: 36px;
     margin-right: 16px;
+    width: 36px;
   }
 
   label:after {
-    content: "\2714"; 
-    font-family: "Arial", sans-serif; 
     background-color: transparent;
+    color: black;
+    content: "\2714";
+    font-family: "Arial", sans-serif;
+    font-size: 32px;
+    left: 48px;
     position: absolute;
     top: 20px;
-    left: 48px;
     transform: translate(-50%, -50%) scale(0);
-    font-size: 32px; 
-    color: black; 
     transition: transform 0.3s ease;
   }
 

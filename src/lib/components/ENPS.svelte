@@ -32,7 +32,7 @@
 
   // Layout settings for the chart
   var layout = {
-    height: window.screen.height - 175,
+    height: window.screen.height - 250,
     width: window.screen.width - 275,
     yaxis: {
       range: [-100, 100],
