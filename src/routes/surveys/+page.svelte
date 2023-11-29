@@ -118,9 +118,10 @@
     </button>
   </Survey>
   {#each surveys as survey}
+    {@const date = new Date(survey.date_created).toLocaleDateString()}
     <Survey
       title={survey.title}
-      date={survey.date_created}
+      date={date}
       isLink
       href={"/surveys/" + survey._id}
     />
