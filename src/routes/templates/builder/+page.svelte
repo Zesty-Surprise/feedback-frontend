@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
 
   async function postTemplate(template: any) {
-    const res = await fetch("http://localhost:8000/api/templates", {
+    const res = await fetch("https://test.axelzublena.com/api/templates", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

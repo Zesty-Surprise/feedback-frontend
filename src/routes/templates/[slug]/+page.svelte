@@ -1,17 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-
-    
     export let data:any;
 </script>
-
-
-<!-- <div class="mt-10 px-10 text-zinc-600">
-    <h1 class="block text-xl font-medium">Template preview</h1>
-</div>
-<div class="m-10 px-10 text-zinc-600 bg-red-500 w-3/4 h-3/4">
-    <div class="text-black">{@html data.html}</div>
-</div> -->
 
 <div class="grid grid-cols-3 grid-rows-5 gap-4 text-zinc-600 m-10">
     <div class="col-span-3">
@@ -29,7 +19,7 @@
                           
                           </svg>
                     </button>
-                    <button type="submit" class="w-18 text-color bg-white border-custom p-2  hover:bg-orange-200" on:click={()=>{goto(`/builder/${data.template._id}`)}}>
+                    <button type="submit" class="w-18 text-color bg-white border-custom p-2  hover:bg-orange-200" on:click={()=>{goto(`/templates/builder/${data.template._id}`)}}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
                             <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
                             <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
@@ -41,7 +31,7 @@
     </div>
     <div class="flex justify-center col-span-3 row-span-4 row-start-2 border-custom bg-white">
         <!-- <div class="w-96 h-32">{@html data.html}</div> -->
-        <div class="w-96 h-32" >{data.html}</div>
+        <!-- <div class="w-96 h-32" >{data.html}</div> -->
     </div>
 </div>
 

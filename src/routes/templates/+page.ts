@@ -1,11 +1,7 @@
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-  let response = await fetch("http://localhost:8000/api/templates", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
+  let response = await fetch("https://test.axelzublena.com/api/templates", {
+    method: "GET"
   });
   let json = await response.json();
 

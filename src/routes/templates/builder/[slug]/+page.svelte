@@ -3,11 +3,11 @@
     export let data:any;
 
   async function postTemplate(template: any) {
-    const res = await fetch(`http://localhost:8000/api/templates/${data.template._id}`, {
+    const res = await fetch(`https://test.axelzublena.com/api/templates/${data.template._id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
-      },
+      "Content-Type": "application/json",
+      },  
       body: JSON.stringify(template),
     });
     const json = await res.json();
