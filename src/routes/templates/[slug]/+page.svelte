@@ -8,7 +8,7 @@
         <div class="flex justify-between rounded-md mb-5">
             <div>
                 <h1 class="block text-xl font-medium">Template preview</h1>
-                <p>This is were you can see fully assembled template</p>
+                <p>This is where you can see fully assembled template</p>
             </div>
 
             <div class="p-4 bg-white border border-gray-200 rounded-xl shadow m ml-0">
