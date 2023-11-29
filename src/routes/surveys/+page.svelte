@@ -4,20 +4,19 @@
 
   let showModal = false;
 
-  let template = {
-    _id: "",
-    name: "",
-  };
-  let templates = [template];
-  
   let survey = {
     title: "",
     date_created: "",
     _id: "",
-    template,
+    template : {
+      _id : "",
+      name : "",
+    },
     participants: 0,
   };
   let surveys = [survey];
+
+  let templates = [survey.template];
 
   async function fetchData() {
     surveys = await getSurveys();
@@ -45,15 +44,15 @@
       template: survey.template.name,
       title: survey.title,
     };
-    
+
     await fetch("https://test.axelzublena.com/api/sessions", {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    })
-    
+    });
+
     fetchData();
   }
 </script>
@@ -85,10 +84,10 @@
           class="w-2/4 rounded-md border border-[#2b21181a] pt-1 pb-1"
           bind:value={survey.template}
         >
-          {#each templates as value}<option
-              class="bg-color-layout"
-              {value}>{value.name}</option
-            >{/each}
+          {#each templates as template}
+            <option class="bg-color-layout" value={template}
+              >{template.name}
+            </option>{/each}
         </select>
       </div>
       <div class="pt-3 pb-2 self-center">
@@ -113,7 +112,7 @@
       <div
         class="bg-color-accent rounded-full w-14 h-14 flex justify-center items-center"
       >
-        <iconify-icon class="text-white" icon="typcn:plus" width="48px"/>
+        <iconify-icon class="text-white" icon="typcn:plus" width="48px" />
       </div>
     </button>
   </Survey>
@@ -121,7 +120,7 @@
     {@const date = new Date(survey.date_created).toLocaleDateString()}
     <Survey
       title={survey.title}
-      date={date}
+      {date}
       isLink
       href={"/surveys/" + survey._id}
     />
