@@ -1,10 +1,13 @@
 <script lang="ts">
   export let showModal: Boolean;
 
+  import { createEventDispatcher } from "svelte";
+
   let checkedCheckboxes: Array<string> = [];
+  const dispatch = createEventDispatcher();
 
   function handleCheckbox() {
-    console.log(checkedCheckboxes);
+    dispatch('checkboxesChanged', checkedCheckboxes);
   }
 
   function setModal() {
@@ -29,10 +32,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="it"
-          value="it"
+          value="IT"
           id="it"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="it">IT</label>
 
@@ -40,10 +42,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="production"
-          value="production"
+          value="Production"
           id="production"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="production">Production</label>
 
@@ -51,10 +52,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="people"
-          value="people"
+          value="People"
           id="people"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="people">People</label>
 
@@ -62,10 +62,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="campus"
-          value="campus"
+          value="Campus"
           id="campus"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="campus">Campus</label>
 
@@ -73,10 +72,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="finance"
-          value="finance"
+          value="Finance"
           id="finance"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="finance">Finance</label>
       </div>
@@ -86,10 +84,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="gifts"
-          value="gifts"
+          value="Gifts"
           id="gifts"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="gifts">Gifts</label>
 
@@ -97,10 +94,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="innovation"
-          value="innovation"
+          value="Innovation"
           id="innovation"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="innovation">Innovation</label>
 
@@ -108,10 +104,9 @@
           type="checkbox"
           class="modalCheckbox"
           name="ecommerce"
-          value="ecommerce"
+          value="E-commerce"
           id="ecommerce"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="ecommerce">E-commerce</label>
 
@@ -119,12 +114,21 @@
           type="checkbox"
           class="modalCheckbox"
           name="customerService"
-          value="customerService"
+          value="Customer Service"
           id="customerService"
           bind:group={checkedCheckboxes}
-          on:change={handleCheckbox}
         />
         <label for="customerService">Customer service</label>
+
+        <input
+          type="checkbox"
+          class="modalCheckbox"
+          name="purchase"
+          value="Purchase"
+          id="purchase"
+          bind:group={checkedCheckboxes}
+        />
+        <label for="purchase">Purchase</label>
       </div>
     </div>
     <div class="modal__apply">
@@ -132,7 +136,8 @@
       <button
         class="button"
         on:click={() => {
-          setModal();
+          setModal(),
+          handleCheckbox()
         }}>Apply</button
       >
     </div>
@@ -261,7 +266,7 @@
   .button {
     background-color: #de896e;
     border-radius: 45px;
-    padding: 10px 45px;
+    padding: 10px 74px;
     transition: 0.3s;
     width: fit-content;
   }
@@ -274,7 +279,7 @@
     border-radius: 45px;
     border: 1px solid #595959;
     color: #595959;
-    padding: 10px 45px;
+    padding: 10px 74px;
     transition: 0.3s;
     width: fit-content;
   }
