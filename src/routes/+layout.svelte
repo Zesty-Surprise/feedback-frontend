@@ -1,39 +1,58 @@
 <script lang="ts">
   import { TabGroup, TabAnchor } from "@skeletonlabs/skeleton";
   export let data;
-
   import "../app.css";
-
+  
   import Header from "$lib/components/Header.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";
 
-  const sidebarItems = [
+  const surveySidebarItems = [{
+      title: "Overview",
+      icon: "teenyicons:pie-chart-solid",
+      url: [`/surveys/${data.slug}`]
+    },
+    {
+      title: "Feedback",
+      icon: "mingcute:document-fill",
+      url: [`/surveys/${data.slug}/feedback`]
+  }];
+
+  const regularSidebarItems  = [
     {
       title: "General",
       icon: "teenyicons:pie-chart-solid",
-      url: "/",
+      url: ["/"],
     },
     {
       title: "Surveys",
       icon: "mingcute:document-fill",
-      url: "/surveys",
+      url: ["/surveys"],
     },
     {
       title: "eNPS",
       icon: "ion:person",
-      url: "/enps",
+      url: ["/enps"],
     },
     {
       title: "Engagement",
       icon: "iconoir:percentage-square-solid",
-      url: "/engagement",
+      url: ["/engagement"],
     },
     {
       title: "Templates",
       icon: "heroicons-solid:template",
-      url: "/templates",
+      url: ["/templates", "/builder" , `/templates/${data.slug}`, `/templates/builder/${data.slug}`, `/templates/builder`],
     },
   ];
+
+  let sidebarItems : {
+    title:string,
+    icon:string,
+    url:string[]
+  }[];
+  
+  $: sidebarItems = data.pathname.includes(`/surveys/${data.slug}`) ? surveySidebarItems : regularSidebarItems;
+
 </script>
 
 <AppShell
@@ -56,8 +75,8 @@
           rounded="rounded-md"
           hover="hover:bg-color-hover"
           flex="flex flex-row"
-          selected={data.pathname === item.url}
-          href={item.url}
+          selected={item.url.includes(data.pathname)}
+          href={item.url[0]}
         >
           <div class="flex items-center font-normal">
             <iconify-icon
