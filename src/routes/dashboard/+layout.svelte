@@ -2,7 +2,7 @@
   import { TabGroup, TabAnchor } from "@skeletonlabs/skeleton";
   export let data;
 
-  import "../app.css";
+  import "../../app.css";
 
   import Header from "$lib/components/Header.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";
@@ -57,7 +57,7 @@
           hover="hover:bg-color-hover"
           flex="flex flex-row"
           selected={data.pathname === item.url}
-          href={item.url}
+          href={`/dashboard${item.url}`}
         >
           <div class="flex items-center font-normal">
             <iconify-icon
