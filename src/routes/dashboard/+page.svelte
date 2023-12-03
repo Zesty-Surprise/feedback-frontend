@@ -1,20 +1,23 @@
 <script lang="ts">
   import Home from "$lib/components/Home.svelte";
-  import { getCookie, setCookie } from "typescript-cookie";
   import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
+  import { checkAuth } from "../auth/auth";
 
   let data = "";
 
   onMount(async () => {
-    const token = getCookie("access_token");
+    const isAuthorized: boolean = await checkAuth();
 
-    if (!token) {
-      // Redirect to login or handle unauthorized access
-      console.error("Unauthorized access");
-      goto("auth/login");
+    if (!isAuthorized) {
       return;
     }
+    // const token = getCookie("access_token");
+
+    // if (!token) {
+    //   console.error("Unauthorized access");
+    //   goto("auth/login");
+    //   return;
+    // }
 
     // const response = await fetch("http://your-api/protected-resource", {
     //   headers: {
