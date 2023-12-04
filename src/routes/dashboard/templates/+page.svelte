@@ -1,12 +1,9 @@
 <script lang="ts">
     import { PUBLIC_BACKEND_URI } from "$env/static/public";
     import { goto, invalidateAll } from "$app/navigation";
-<<<<<<< HEAD
-=======
     import { onMount } from "svelte";
     import { checkAuth } from "../../auth/auth";
-  import { fetchAPI } from "$lib/functions";
->>>>>>> 78088dff9e16b2e1b197e6586653fd240fe42910
+    import { fetchAPI } from "$lib/functions";
 
     export let data: any;
 
