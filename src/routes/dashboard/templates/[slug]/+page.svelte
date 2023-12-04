@@ -75,6 +75,6 @@
     class="flex justify-center col-span-3 row-span-4 row-start-2 border-2 border-color-accent rounded-2xl bg-white"
   >
     <!-- <div class="w-96 h-32">{@html data.html}</div> -->
-    <!-- <div class="w-96 h-32" >{data.html}</div> -->
+    <div class="w-96 h-32" >{data.html}</div>
   </div>
 </div>

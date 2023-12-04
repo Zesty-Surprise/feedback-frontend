@@ -2,6 +2,7 @@
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import { setCookie } from "typescript-cookie";
+    import { BACKEND_URI } from "$env/static/public"
 
     onMount(() => {
         // Check if the URL contains the authorization code after redirection
@@ -21,7 +22,7 @@
         const state = localStorage.getItem("state");
 
         fetch(
-            `http://localhost:8000/api/token?code=${code}&state=eaa7b80f376218876a5d69af4534ac6943acf6c32087f47d929cea91a05d254c`,
+            BACKEND_URI + `api/token?code=${code}&state=eaa7b80f376218876a5d69af4534ac6943acf6c32087f47d929cea91a05d254c`,
         )
             .then((response) => {
                 if (!response.ok) {

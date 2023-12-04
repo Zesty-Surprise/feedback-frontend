@@ -1,7 +1,9 @@
 <script lang="ts">
+    import { PUBLIC_BACKEND_URI } from "$env/static/public";
     import { goto, invalidateAll } from "$app/navigation";
     import { onMount } from "svelte";
     import { checkAuth } from "../../auth/auth";
+  import { fetchAPI } from "$lib/functions";
 
     export let data: any;
 
@@ -14,12 +16,7 @@
     });
 
     const deleteRequest = async (id: string): Promise<void> => {
-        const res = await fetch(
-            `https://amp.test.axelzublena.com/api/templates/${id}`,
-            {
-                method: "DELETE",
-            },
-        );
+        const res = await fetchAPI(`templates/${id}`, "DELETE")
         const json = await res.json();
         return json;
     };
