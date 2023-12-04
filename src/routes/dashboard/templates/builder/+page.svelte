@@ -1,6 +1,8 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
+    import { checkAuth } from "../../../auth/auth";
+    import { PUBLIC_BACKEND_URI } from "$env/static/public";
     import { fetchAPI } from "$lib/functions";
 
     async function postTemplate(template: any) {
