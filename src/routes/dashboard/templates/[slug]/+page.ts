@@ -1,13 +1,12 @@
+
+import { fetchAPI } from '$lib/functions.js';
+
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-
-  let html_response = await fetch(`https://amp.test.axelzublena.com/api/email/${params.slug}`, {
-    method: "GET"
-  });
-  let html_data = await html_response.text();
-
+  let html_data = await fetchAPI(`email/${params.slug}`, "GET")
+  const json = await html_data.text();
   return {
-    html: html_data,
+    html: json,
     template: params.slug
   };
 }
