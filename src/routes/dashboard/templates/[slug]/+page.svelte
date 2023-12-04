@@ -1,6 +1,17 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { checkAuth } from "../../../auth/auth";
+
   export let data: any;
+
+  onMount(async () => {
+    const isAuthorized: boolean = await checkAuth();
+
+    if (!isAuthorized) {
+      return;
+    }
+  });
 </script>
 
 <div class="grid grid-cols-3 grid-rows-5 gap-4 text-zinc-600 m-10">
@@ -18,7 +29,7 @@
           type="submit"
           class="w-18 text-color-accent bg-white border-2 border-color-accent rounded-2xl p-2 mr-2 hover:bg-orange-200"
           on:click={() => {
-            goto("/templates");
+            goto("/dashboard/templates");
           }}
         >
           <svg
@@ -40,7 +51,7 @@
           type="submit"
           class="w-18 text-color-accent bg-white border-2 border-color-accent rounded-2xl p-2 hover:bg-orange-200"
           on:click={() => {
-            goto(`/templates/builder/${data.template._id}`);
+            goto(`/dashboard/templates/builder/${data.template}`);
           }}
         >
           <svg
