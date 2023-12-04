@@ -1,7 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
-    import { checkAuth } from "../../../auth/auth";
 
     async function postTemplate(template: any) {
         const res = await fetch(
@@ -57,13 +56,7 @@
         goto(`/dashboard/templates/${resp._id}`, { replaceState: true });
     };
 
-    onMount(async () => {
-        const isAuthorized: boolean = await checkAuth();
-
-        if (!isAuthorized) {
-            return;
-        }
-
+    onMount(() => {
         loading = false;
     });
 </script>

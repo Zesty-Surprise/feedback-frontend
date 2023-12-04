@@ -4,35 +4,28 @@
   import { checkAuth } from "../auth/auth";
 
   let data = "";
+  // const token = getCookie("access_token");
 
-  onMount(async () => {
-    const isAuthorized: boolean = await checkAuth();
+  // if (!token) {
+  //   console.error("Unauthorized access");
+  //   goto("auth/login");
+  //   return;
+  // }
 
-    if (!isAuthorized) {
-      return;
-    }
-    // const token = getCookie("access_token");
+  // const response = await fetch("http://your-api/protected-resource", {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // });
 
-    // if (!token) {
-    //   console.error("Unauthorized access");
-    //   goto("auth/login");
-    //   return;
-    // }
-
-    // const response = await fetch("http://your-api/protected-resource", {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-
-    // if (response.ok) {
-    //   const result = await response.json();
-    //   data = result.data;
-    // } else {
-    //   // Handle unauthorized access or other errors
-    //   console.error("Error accessing protected resource");
-    // }
-  });
+  // if (response.ok) {
+  //   const result = await response.json();
+  //   data = result.data;
+  // } else {
+  //   // Handle unauthorized access or other errors
+  //   console.error("Error accessing protected resource");
+  // }
+  // });
 </script>
 
 <!-- website body -->

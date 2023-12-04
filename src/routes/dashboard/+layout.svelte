@@ -6,6 +6,16 @@
 
   import Header from "$lib/components/Header.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";
+  import { onMount } from "svelte";
+  import { checkAuth } from "../auth/auth";
+
+  onMount(async () => {
+    const isAuthorized: boolean = await checkAuth();
+
+    if (!isAuthorized) {
+      return;
+    }
+  });
 
   const sidebarItems = [
     {

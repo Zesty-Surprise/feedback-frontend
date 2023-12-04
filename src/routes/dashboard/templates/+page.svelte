@@ -1,17 +1,7 @@
 <script lang="ts">
     import { goto, invalidateAll } from "$app/navigation";
-    import { onMount } from "svelte";
-    import { checkAuth } from "../../auth/auth";
 
     export let data: any;
-
-    onMount(async () => {
-        const isAuthorized: boolean = await checkAuth();
-
-        if (!isAuthorized) {
-            return;
-        }
-    });
 
     const deleteRequest = async (id: string): Promise<void> => {
         const res = await fetch(
