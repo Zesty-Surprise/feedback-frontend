@@ -2,6 +2,7 @@
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import { setCookie } from "typescript-cookie";
+    import { PUBLIC_BACKEND_URI } from "$env/static/public";
 
     let email = "";
     let password = "";
@@ -17,7 +18,7 @@
         const tokenType = params.get("token_type");
 
         if (accessToken && tokenType === "bearer") {
-            setCookie("access_token", accessToken, { expires: 1 });
+            setCookie("access_token", accessToken, { expires: 420 });
 
             goto("/dashboard");
         } else {
@@ -32,7 +33,7 @@
     function fetchData(event) {
         event.preventDefault();
 
-        fetch("http://localhost:8000/api/token", {
+        fetch(PUBLIC_BACKEND_URI + "token", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -55,7 +56,7 @@
                 // Assuming the access token is present in the result
                 const accessToken = result.access_token;
 
-                setCookie("access_token", accessToken, { expires: 1 });
+                setCookie("access_token", accessToken, { expires: 420 });
                 goto("/dashboard");
             })
             .catch((error) => {

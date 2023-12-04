@@ -2,6 +2,8 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { checkAuth } from "../../../../auth/auth";
+  import { fetchAPI } from "$lib/functions";
+
 
   export let data: any;
 
@@ -14,16 +16,7 @@
   });
 
   async function postTemplate(template: any) {
-    const res = await fetch(
-      `https://amp.test.axelzublena.com/api/templates/${data.template._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(template),
-      },
-    );
+    const res = await fetchAPI(`templates/${data.template._id}`,"PUT",template )
     const json = await res.json();
     return json;
   }
