@@ -1,16 +1,19 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import Modal from "$lib/components/Generic/Modal.svelte";
   import Survey from "$lib/components/Surveys/Survey.svelte";
 
-  let showModal = false;
+  let showSurveyModal = false;
+  let showDeleteModal = false;
+  let deleteId = "";
 
   let survey = {
     title: "",
     date_created: "",
     _id: "",
-    template : {
-      _id : "",
-      name : "",
+    template: {
+      _id: "",
+      name: "",
     },
     participants: 0,
   };
@@ -18,23 +21,27 @@
 
   let templates = [survey.template];
 
-  async function fetchData() {
-    surveys = await getSurveys();
-    templates = await getTemplates();
-  }
-  async function getSurveys() {
-    const response = await fetch("https://test.axelzublena.com/api/sessions");
-    const surveys = await response.json();
-    return surveys;
-  }
-  async function getTemplates() {
-    const response = await fetch("https://test.axelzublena.com/api/templates");
-    const templates = await response.json();
-    return templates;
-  }
-  (async () => {
-    await fetchData();
-  })();
+  // async function fetchData() {
+  //   surveys = await getSurveys();
+  //   templates = await getTemplates();
+  // }
+  // async function getSurveys() {
+  //   const response = await fetch(
+  //     "https://amp.test.axelzublena.com/api/sessions"
+  //   );
+  //   const surveys = await response.json();
+  //   return surveys;
+  // }
+  // async function getTemplates() {
+  //   const response = await fetch(
+  //     "https://amp.test.axelzublena.com/api/templates"
+  //   );
+  //   const templates = await response.json();
+  //   return templates;
+  // }
+  // (async () => {
+  //   await fetchData();
+  // })();
 
   async function handleSubmit() {
     const formData = {
@@ -45,7 +52,7 @@
       title: survey.title,
     };
 
-    await fetch("https://test.axelzublena.com/api/sessions", {
+    await fetch("https://amp.test.axelzublena.com/api/sessions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,11 +60,21 @@
       body: JSON.stringify(formData),
     });
 
-    fetchData();
+    // fetchData();
+  }
+
+  async function handleDelete(id:string) {
+    await fetch(`https://amp.test.axelzublena.com/api/sessions/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // fetchData();
   }
 </script>
 
-<Modal bind:showModal>
+<Modal bind:showModal={showSurveyModal}>
   <p slot="header" class="text-color-text font-semibold">Create a new survey</p>
 
   <form on:submit|preventDefault={handleSubmit}>
@@ -94,7 +111,7 @@
         <button
           class="text-white bg-color-accent hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
           type="submit"
-          on:click={() => (showModal = false)}
+          on:click={() => (showSurveyModal = false)}
         >
           Create
         </button>
@@ -103,11 +120,32 @@
   </form>
 </Modal>
 
+<Modal bind:showModal={showDeleteModal}>
+  <p slot="header" class="text-color-text font-semibold text-center">Are you sure you want to delete this survey?</p>
+  <div class="pt-3 pb-2 self-center flex justify-center gap-5">
+    <button
+      class="text-white bg-red-500 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+      type="submit"
+      on:click={() => (showDeleteModal = false)}
+      on:click={() => handleDelete(deleteId)}
+    >
+      Delete
+    </button>
+    <button
+      class="text-white bg-gray-300 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+      type="submit"
+      on:click={() => (showDeleteModal = false)}
+    >
+      Cancel
+    </button>
+  </div>
+</Modal>
+
 <div class="flex flex-wrap ml-12 mr-16">
   <Survey title="Create a new survey">
     <button
       class="flex justify-center items-center h-full w-full"
-      on:click={() => (showModal = true)}
+      on:click={() => (showSurveyModal = true)}
     >
       <div
         class="bg-color-accent rounded-full w-14 h-14 flex justify-center items-center"
@@ -118,11 +156,23 @@
   </Survey>
   {#each surveys as survey}
     {@const date = new Date(survey.date_created).toLocaleDateString()}
-    <Survey
-      title={survey.title}
-      {date}
-      isLink
-      href={"/surveys/" + survey._id}
-    />
+    <Survey title={survey.title} {date}>
+      <button
+        class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
+        on:click={() => {
+          goto(`/surveys/${survey._id}`);
+        }}
+      >
+        <iconify-icon class="text-white" icon="uis:chart" width="36px" />
+      </button>
+
+      <button
+        class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
+        on:click={() => (showDeleteModal = true)}
+        on:click={() => (deleteId = survey._id)}
+      >
+        <iconify-icon class="text-white" icon="ph:trash-fill" width="40px" />
+      </button>
+    </Survey>
   {/each}
 </div>
