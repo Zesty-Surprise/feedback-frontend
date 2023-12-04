@@ -56,7 +56,7 @@
                 // Assuming the access token is present in the result
                 const accessToken = result.access_token;
 
-                setCookie("access_token", accessToken, { expires: 1 });
+                setCookie("access_token", accessToken, { expires: 420 });
                 goto("/dashboard");
             })
             .catch((error) => {
