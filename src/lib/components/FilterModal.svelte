@@ -3,10 +3,10 @@
 
   import { createEventDispatcher } from "svelte";
 
-  let checkedCheckboxes: Array<string> = [];
+  let checkedCheckboxes: String;;
   const dispatch = createEventDispatcher();
 
-  function handleCheckbox() {
+  function handleCheckbox() {    
     dispatch('checkboxesChanged', checkedCheckboxes);
   }
 
@@ -29,7 +29,7 @@
     <div class="modal__options">
       <div class="modal__option-column">
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="it"
           value="IT"
@@ -39,7 +39,7 @@
         <label for="it">IT</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="production"
           value="Production"
@@ -49,7 +49,7 @@
         <label for="production">Production</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="people"
           value="People"
@@ -59,7 +59,7 @@
         <label for="people">People</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="campus"
           value="Campus"
@@ -69,7 +69,7 @@
         <label for="campus">Campus</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="finance"
           value="Finance"
@@ -81,7 +81,7 @@
 
       <div class="modal__option-column">
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="gifts"
           value="Gifts"
@@ -91,7 +91,7 @@
         <label for="gifts">Gifts</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="innovation"
           value="Innovation"
@@ -101,7 +101,7 @@
         <label for="innovation">Innovation</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="ecommerce"
           value="E-commerce"
@@ -111,7 +111,7 @@
         <label for="ecommerce">E-commerce</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="customerService"
           value="Customer Service"
@@ -121,7 +121,7 @@
         <label for="customerService">Customer service</label>
 
         <input
-          type="checkbox"
+          type="radio"
           class="modalCheckbox"
           name="purchase"
           value="Purchase"
@@ -202,7 +202,7 @@
     position: relative;
   }
 
-  input[type="checkbox"] {
+  input[type="radio"] {
     display: none;
   }
 

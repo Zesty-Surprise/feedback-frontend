@@ -4,7 +4,19 @@
 
   let showModal = false;
   let formData: Object;
-  let checkedCheckboxes: Array<string> = [];
+  let checkedCheckboxes: String;
+  let data: Object;
+  let layout = {
+    height: window.screen.height - 250,
+    width: window.screen.width - 275,
+    yaxis: {
+      range: [-100, 100],
+    },
+    paper_bgcolor: "#FCF8F4",
+    plot_bgcolor: "#FCF8F4",
+  };
+  let dataX: Array<number> = [];
+  let dataY: Array<string> = [];
 
   fetch("http://localhost:8000/api/sessions")
     .then((response) => {
@@ -23,78 +35,20 @@
 
   let loadChartData = setInterval(() => {
     if (formData != undefined) {
-      var data = [
+      for (const value of Object.values(formData)) {
+        dataX.push(value.score);
+        dataY.push(value._id);
+      }
+
+      data = [
         {
-          x: [
-            formData[Object.keys(formData)[Object.keys(formData).length - 1]]
-              ._id,
-            formData[Object.keys(formData)[Object.keys(formData).length - 2]]
-              ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 3]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 4]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 5]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 6]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 7]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 8]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 9]]
-            //   ._id,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 10]]
-            //   ._id,
-          ],
-          y: [
-            formData[Object.keys(formData)[Object.keys(formData).length - 1]]
-              .score,
-            formData[Object.keys(formData)[Object.keys(formData).length - 2]]
-              .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 3]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 4]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 5]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 6]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 7]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 8]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 9]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 10]]
-            //   .score,
-          ],
+          x: dataY,
+          y: dataX,
           type: "bar",
           marker: {
             color: "rgba(118, 137, 72, 0.40)",
           },
-          text: [
-            formData[Object.keys(formData)[Object.keys(formData).length - 1]]
-              .score,
-            formData[Object.keys(formData)[Object.keys(formData).length - 2]]
-              .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 3]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 4]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 5]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 6]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 7]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 8]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 9]]
-            //   .score,
-            // formData[Object.keys(formData)[Object.keys(formData).length - 10]]
-            //   .score,
-          ],
+          text: dataX,
           textposition: "inside",
           insidetextanchor: "middle",
           textfont: {
@@ -102,17 +56,6 @@
           },
         },
       ];
-
-      // Layout settings for the chart
-      var layout = {
-        height: window.screen.height - 250,
-        width: window.screen.width - 275,
-        yaxis: {
-          range: [-100, 100],
-        },
-        paper_bgcolor: "#FCF8F4",
-        plot_bgcolor: "#FCF8F4",
-      };
       clearInterval(loadChartData);
     }
 
@@ -127,22 +70,39 @@
 
   function handleCheckboxesChanged(event) {
     checkedCheckboxes = event.detail;
-    console.log(checkedCheckboxes);
-    filterDepartments();
+    getFilteredDepartments();
   }
 
-  function filterDepartments() {
-    let results: Array<object> = [];
+  async function getFilteredDepartments() {
+    let response = await fetch(
+      "http://localhost:8000/api/sessions/" +
+        formData[0]._id +
+        "?dep=" +
+        checkedCheckboxes
+    );
+    let session = await response.json();
+    await updateGraph(session);
+  }
 
-    for (let i = 0; i < formData[0].forms.length; i++) {
-      //   console.log(formData[0].forms[i].department);
-      for (let j = 0; j < checkedCheckboxes.length; j++) {
-        if (formData[0].forms[i].department === checkedCheckboxes[j]) {
-          results.push(formData[0].forms[i]);
-        }
-      }
-    }
-    console.log(results);
+  function updateGraph(data: Object) {
+    let newdata = [
+      {
+        x: [data.template],
+        y: [data.score],
+        text: [data.score],
+        type: "bar",
+        marker: {
+          color: "rgba(118, 137, 72, 0.40)",
+        },
+        textposition: "inside",
+        insidetextanchor: "middle",
+        textfont: {
+          color: "white",
+        },
+      },
+    ];
+
+    Plotly.react("barChart", newdata, layout);
   }
 </script>
 
