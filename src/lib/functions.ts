@@ -1,48 +1,40 @@
-import { writable, derived } from "svelte/store";
-import { getCookie } from "typescript-cookie";
 import { env } from "$env/dynamic/public";
+import { error } from '@sveltejs/kit';
 
-const apiData = writable([]);
-
-// export const drinkNames = derived(apiData, ($apiData) => {
-//     if ($apiData.drinks) {
-//       return $apiData.drinks.map((drink) => drink.strDrink);
-//     }
-//     return [];
-//   });
-
-export async function eNPSData() {
-  fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Bourbon")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      apiData.set(data);
-    })
-    .catch((error) => {
-      console.log(error);
-      return [];
-    });
-}
-
-export async function fetchAPI(route:string, method: string, body?:any):Promise<Response>{
-  const token = getCookie("access_token");
+export async function fetchAPI(route:string, method: string, access_token: string, body?:any,) : Promise<Response>{
+  let request : {
+    method:string,
+    headers?:any,
+    body?:string
+  };
   if (method === "POST" || method === "PUT") {
-    let response = await fetch(env.PUBLIC_BACKEND_URI + route, {
+    request = {
       method: method,
       headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type" : "application/json",
       },
       body:JSON.stringify(body)
-    });
-    return response
+    }
   } else {
-    let response = await fetch(env.PUBLIC_BACKEND_URI + route, {
+    request = {
       method: method,
       headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${access_token}`
       }
-    });
-    return response
+    }
+  }
+
+  let response = await fetch(env.PUBLIC_BACKEND_URI + route, request)
+  return response
+}
+
+export async function isLoggedIn(access_token: string){
+  const result = await fetchAPI("token/valid", "GET", access_token);
+  if (result.status === 401){
+    throw error(401, {
+			message: 'Session expired',
+		});
   }
 }
+

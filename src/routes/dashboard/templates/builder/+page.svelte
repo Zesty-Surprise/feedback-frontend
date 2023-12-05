@@ -1,12 +1,11 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { onMount } from "svelte";
-    import { checkAuth } from "../../../auth/auth";
-    import { PUBLIC_BACKEND_URI } from "$env/static/public";
   import { fetchAPI } from "$lib/functions";
 
+    export let data: any;
+
     async function postTemplate(template: any) {
-        const res = await fetchAPI( "templates", "POST", template);
+        const res = await fetchAPI( "templates", "POST", data.cookie, template);
         const json = await res.json();
         return json;
     }
@@ -47,18 +46,9 @@
 
     const saveTemplate = async (): Promise<void> => {
         let resp = await postTemplate(newTemplate);
-        goto(`/dashboard/templates/${resp._id}`, { replaceState: true });
+        goto(`/dashboard/templates`, { replaceState: true });
     };
 
-    onMount(async () => {
-        const isAuthorized: boolean = await checkAuth();
-
-        if (!isAuthorized) {
-            return;
-        }
-
-        loading = false;
-    });
 </script>
 
 <div class="grid grid-cols-3 grid-rows-3 gap-3 text-zinc-600 m-10">
