@@ -2,17 +2,7 @@
   import { goto, invalidateAll } from "$app/navigation";
   import Modal from "$lib/components/Generic/Modal.svelte";
   import Survey from "$lib/components/Surveys/Survey.svelte";
-  import { onMount } from "svelte";
-  import { checkAuth } from "../../auth/auth";
   import { fetchAPI } from "$lib/functions";
-
-  onMount(async () => {
-    const isAuthorized: boolean = await checkAuth();
-
-    if (!isAuthorized) {
-      return;
-    }
-  });
 
   export let data: any;
 
@@ -31,30 +21,6 @@
     participants: 0,
   };
 
-  // let templates = [survey.template];
-
-  // async function fetchData() {
-  //   surveys = await getSurveys();
-  //   templates = await getTemplates();
-  // }
-  // async function getSurveys() {
-  //   const response = await fetch(
-  //     "https://amp.test.axelzublena.com/api/sessions"
-  //   );
-  //   const surveys = await response.json();
-  //   return surveys;
-  // }
-  // async function getTemplates() {
-  //   const response = await fetch(
-  //     "https://amp.test.axelzublena.com/api/templates"
-  //   );
-  //   const templates = await response.json();
-  //   return templates;
-  // }
-  // (async () => {
-  //   await fetchData();
-  // })();
-
   async function handleSubmit() {
     const formData = {
       emails: ["bobpanda.bp@gmail.com"],
@@ -63,12 +29,12 @@
       template: survey.template._id,
       title: survey.title,
     };
-    await fetchAPI("sessions", "POST", formData);
+    await fetchAPI("sessions", "POST", data.cookie, formData);
     invalidateAll();
   }
 
   async function handleDelete(id: string) {
-    await fetchAPI(`sessions/${id}`, "DELETE");
+    await fetchAPI(`sessions/${id}`, "DELETE", data.cookie);
     invalidateAll();
   }
 </script>
