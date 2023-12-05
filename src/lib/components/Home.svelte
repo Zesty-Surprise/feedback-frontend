@@ -1,12 +1,25 @@
 <script lang="ts">
   import Plotly from "plotly.js-dist-min";
 
-  let gaugeColour = "";
-  let espn = 55;
+  export let sessions: any;
 
-  if (espn <= 0) {
+  let promoters = sessions[0].promoters;
+  let demoters = sessions[0].demoter;
+  let passives = sessions[0].passive;
+
+  let total = promoters + demoters + passives;
+
+  let promotersPercent = (promoters / total) * 100;
+  let demotersPercent = (demoters / total) * 100;
+  let passivesPercent = (passives / total) * 100;
+
+  let gaugeColour = "";
+
+  let enps = sessions[0].score;
+
+  if (enps <= 0) {
     gaugeColour = "#de896e";
-  } else if (espn < 20 && espn >= 1) {
+  } else if (enps < 20 && enps >= 1) {
     gaugeColour = "yellow";
   } else {
     gaugeColour = "#00c100";
@@ -16,7 +29,7 @@
     var data = [
       {
         domain: { x: [0, 1], y: [0, 1] },
-        value: espn,
+        value: enps,
         title: { text: "eNPS" },
         type: "indicator",
         mode: "gauge+number+delta",
@@ -37,8 +50,8 @@
       paper_bgcolor: "#FCF8F4",
     };
 
-    Plotly.newPlot("asdf", data, layout);
-  }, 500);
+    Plotly.newPlot("chart", data, layout);
+  }, 0);
 </script>
 
 <div class="homepage">
@@ -48,7 +61,7 @@
   <div class="homepage__info">
     <div class="homepage__pie-chart-wrapper">
       <!-- <div class="homepage__pie-chart" bind:this={chartElement} /> -->
-      <div id="asdf" style="background: none" />
+      <div id="chart" style="background: none" />
     </div>
     <!-- second column -->
     <div class="homepage__stats">
@@ -57,7 +70,7 @@
         <div class="homepage__bar">
           <div class="homepage__colour green" />
           <div class="homepage__percentage">
-            <p>61.9%</p>
+            <p>{promotersPercent.toFixed(1)}%</p>
           </div>
           <div class="homepage__type">
             <p>Promoters (9-10)</p>
@@ -68,7 +81,7 @@
       <div class="homepage__bar">
         <div class="homepage__colour grey" />
         <div class="homepage__percentage">
-          <p>28.3%</p>
+          <p>{passivesPercent.toFixed(1)}%</p>
         </div>
         <div class="homepage__type">
           <p>Neutrals (7-8)</p>
@@ -78,7 +91,7 @@
       <div class="homepage__bar">
         <div class="homepage__colour red" />
         <div class="homepage__percentage">
-          <p>9.7%</p>
+          <p>{demotersPercent.toFixed(1)}%</p>
         </div>
         <div class="homepage__type">
           <p>Detractors (1-6)</p>
@@ -87,7 +100,7 @@
     </div>
   </div>
   <div class="homepage__completed-by">
-    <span>Completed by <strong>192/411</strong></span>
+    <span>Completed by <strong>{sessions.date_updated}</strong></span>
   </div>
 </div>
 
