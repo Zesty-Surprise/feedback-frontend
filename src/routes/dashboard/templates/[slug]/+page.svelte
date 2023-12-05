@@ -1,17 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
-  import { checkAuth } from "../../../auth/auth";
-
   export let data: any;
-
-  onMount(async () => {
-    const isAuthorized: boolean = await checkAuth();
-
-    if (!isAuthorized) {
-      return;
-    }
-  });
 </script>
 
 <div class="grid grid-cols-3 grid-rows-5 gap-4 text-zinc-600 m-10">
@@ -74,7 +63,7 @@
   <div
     class="flex justify-center col-span-3 row-span-4 row-start-2 border-2 border-color-accent rounded-2xl bg-white"
   >
-    <!-- <div class="w-96 h-32">{@html data.html}</div> -->
-    <div class="w-96 h-32" >{data.html}</div>
+    {@html data.html}
+    <!-- <div class="w-96 h-32" >{data.html}</div> -->
   </div>
 </div>
