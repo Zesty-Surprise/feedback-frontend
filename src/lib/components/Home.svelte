@@ -1,7 +1,17 @@
 <script lang="ts">
   import Plotly from "plotly.js-dist-min";
+  import { onMount } from "svelte";
+  import { checkAuth } from "/src/routes/auth/auth.ts";
 
   export let sessions: any;
+
+  onMount(async () => {
+    const isAuthorized: boolean = await checkAuth();
+
+    if (!isAuthorized) {
+      return;
+    }
+  });
 
   let promoters = sessions[0].promoters;
   let demoters = sessions[0].demoter;
