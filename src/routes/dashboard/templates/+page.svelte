@@ -3,10 +3,7 @@
     import { fetchAPI } from "$lib/functions";
 
     export let data: any;
-
-    console.log(data);
     
-
     const deleteRequest = async (id: string): Promise<void> => {
         const res = await fetchAPI(`templates/${id}`, "DELETE", data.cookie)
         const json = await res.json();

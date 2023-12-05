@@ -75,7 +75,7 @@
     <TabGroup regionList="flex-col border-b-0 px-6 text-color-text">
       {#each sidebarItems as item, index}
         <TabAnchor
-          class="mt-7"
+          class="mt-7 transition duration-200"
           name="tab"
           value={index}
           active="bg-color-highlight text-color-accent"
