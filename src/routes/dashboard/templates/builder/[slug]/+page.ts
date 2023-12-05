@@ -1,11 +1,10 @@
+import { fetchAPI } from '$lib/functions.js';
+
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
-  let response = await fetch("https://test.axelzublena.com/api/templates", {
-    method: "GET"
-  });
+  let response = await fetchAPI(`templates/${params.slug}`, "GET")
   let json = await response.json();
-
   return {
-    templates: json,
+    template: json,
   };
 }

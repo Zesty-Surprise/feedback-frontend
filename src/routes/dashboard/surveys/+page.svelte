@@ -1,7 +1,20 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import Modal from "$lib/components/Generic/Modal.svelte";
   import Survey from "$lib/components/Surveys/Survey.svelte";
+  import { onMount } from "svelte";
+  import { checkAuth } from "../../auth/auth";
+  import { fetchAPI } from "$lib/functions";
+
+  onMount(async () => {
+    const isAuthorized: boolean = await checkAuth();
+
+    if (!isAuthorized) {
+      return;
+    }
+  });
+
+  export let data: any;
 
   let showSurveyModal = false;
   let showDeleteModal = false;
@@ -17,9 +30,8 @@
     },
     participants: 0,
   };
-  let surveys = [survey];
 
-  let templates = [survey.template];
+  // let templates = [survey.template];
 
   // async function fetchData() {
   //   surveys = await getSurveys();
@@ -48,29 +60,16 @@
       emails: ["bobpanda.bp@gmail.com"],
       form_count: survey.participants,
       forms: [],
-      template: survey.template.name,
+      template: survey.template._id,
       title: survey.title,
     };
-
-    await fetch("https://amp.test.axelzublena.com/api/sessions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    // fetchData();
+    await fetchAPI("sessions", "POST", formData);
+    invalidateAll();
   }
 
-  async function handleDelete(id:string) {
-    await fetch(`https://amp.test.axelzublena.com/api/sessions/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    // fetchData();
+  async function handleDelete(id: string) {
+    await fetchAPI(`sessions/${id}`, "DELETE");
+    invalidateAll();
   }
 </script>
 
@@ -101,7 +100,7 @@
           class="w-2/4 rounded-md border border-[#2b21181a] pt-1 pb-1"
           bind:value={survey.template}
         >
-          {#each templates as template}
+          {#each data.templates as template}
             <option class="bg-color-layout" value={template}
               >{template.name}
             </option>{/each}
@@ -121,7 +120,9 @@
 </Modal>
 
 <Modal bind:showModal={showDeleteModal}>
-  <p slot="header" class="text-color-text font-semibold text-center">Are you sure you want to delete this survey?</p>
+  <p slot="header" class="text-color-text font-semibold text-center">
+    Are you sure you want to delete this survey?
+  </p>
   <div class="pt-3 pb-2 self-center flex justify-center gap-5">
     <button
       class="text-white bg-red-500 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
@@ -154,13 +155,13 @@
       </div>
     </button>
   </Survey>
-  {#each surveys as survey}
-    {@const date = new Date(survey.date_created).toLocaleDateString()}
-    <Survey title={survey.title} {date}>
+  {#each data.sessions as session}
+    {@const date = new Date(session.date_created).toLocaleDateString()}
+    <Survey title={session.title} {date}>
       <button
         class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
         on:click={() => {
-          goto(`/surveys/${survey._id}`);
+          goto(`/dashboard/surveys/${session._id}`);
         }}
       >
         <iconify-icon class="text-white" icon="uis:chart" width="36px" />
@@ -169,7 +170,7 @@
       <button
         class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
         on:click={() => (showDeleteModal = true)}
-        on:click={() => (deleteId = survey._id)}
+        on:click={() => (deleteId = session._id)}
       >
         <iconify-icon class="text-white" icon="ph:trash-fill" width="40px" />
       </button>
