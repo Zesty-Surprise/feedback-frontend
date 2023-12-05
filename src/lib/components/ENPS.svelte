@@ -15,8 +15,8 @@
     paper_bgcolor: "#FCF8F4",
     plot_bgcolor: "#FCF8F4",
   };
-  let dataX: Array<number> = [];
-  let dataY: Array<string> = [];
+  let dataY: Array<number> = [];
+  let dataX: Array<string> = [];
 
   fetch("http://localhost:8000/api/sessions")
     .then((response) => {
@@ -36,19 +36,19 @@
   let loadChartData = setInterval(() => {
     if (formData != undefined) {
       for (const value of Object.values(formData)) {
-        dataX.push(value.score);
-        dataY.push(value._id);
+        dataY.push(Math.round((value.score + Number.EPSILON) * 100) / 100);
+        dataX.push(value._id);
       }
 
       data = [
         {
-          x: dataY,
-          y: dataX,
+          x: dataX,
+          y: dataY,
           type: "bar",
           marker: {
             color: "rgba(118, 137, 72, 0.40)",
           },
-          text: dataX,
+          text: dataY,
           textposition: "inside",
           insidetextanchor: "middle",
           textfont: {
@@ -85,11 +85,12 @@
   }
 
   function updateGraph(data: Object) {
+    let roundedScore = Math.round((data.score + Number.EPSILON) * 100) / 100;
     let newdata = [
       {
         x: [data.template],
-        y: [data.score],
-        text: [data.score],
+        y: [roundedScore],
+        text: [roundedScore],
         type: "bar",
         marker: {
           color: "rgba(118, 137, 72, 0.40)",
