@@ -1,22 +1,11 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
-  import { checkAuth } from "../../../../auth/auth";
   import { fetchAPI } from "$lib/functions";
-
 
   export let data: any;
 
-  onMount(async () => {
-    const isAuthorized: boolean = await checkAuth();
-
-    if (!isAuthorized) {
-      return;
-    }
-  });
-
   async function postTemplate(template: any) {
-    const res = await fetchAPI(`templates/${data.template._id}`,"PUT",template )
+    const res = await fetchAPI(`templates/${data.template._id}`,"PUT", data.cookie, template )
     const json = await res.json();
     return json;
   }
@@ -44,7 +33,7 @@
 
   const saveTemplate = async (): Promise<void> => {
     let resp = await postTemplate(newTemplate);
-    goto(`/dashboard/templates/${data.template._id}`, { replaceState: true });
+    goto(`/dashboard/templates`, { replaceState: true });
   };
 </script>
 
