@@ -10,58 +10,14 @@
   import Header from "$lib/components/Header.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";
 
-  const surveySidebarItems = [{
-      title: "Overview",
-      icon: "teenyicons:pie-chart-solid",
-      url: [`/dashboard/surveys/${data.slug}`]
-    },
-    {
-      title: "Feedback",
-      icon: "mingcute:document-fill",
-      url: [`/dashboard/surveys/${data.slug}/feedback`]
-  }];
-
-  const regularSidebarItems = [
-    {
-      title: "General",
-      icon: "teenyicons:pie-chart-solid",
-      url: ["/dashboard"]
-    },
-    {
-      title: "Surveys",
-      icon: "mingcute:document-fill",
-      url: ["/dashboard/surveys"]
-    },
-    {
-      title: "eNPS",
-      icon: "ion:person",
-      url: ["/dashboard/enps"]
-    },
-    {
-      title: "Engagement",
-      icon: "iconoir:percentage-square-solid",
-      url: ["/dashboard/engagement"]
-    },
-    {
-      title: "Templates",
-      icon: "heroicons-solid:template",
-      url: ["/dashboard/templates", 
-      "/dashboard/builder", 
-      `/dashboard/templates/${data.slug}`, 
-      `/dashboard/templates/builder/${data.slug}`, 
-      `/dashboard/templates/builder`
-      ]
-    },
-  ];
-
   let sidebarItems : {
-     title:string,
-     icon:string,
-     url:string[]
-   }[];
+    title:string,
+    icon:string,
+    url:string[]
+  }[];
 
-   $: sidebarItems = data.pathname.includes(`/surveys/${data.slug}`) ? surveySidebarItems : regularSidebarItems;
-
+  $: sidebarItems = data.side
+  
 </script>
 
 <AppShell

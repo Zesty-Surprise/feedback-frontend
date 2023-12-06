@@ -40,7 +40,7 @@
     if (formData != undefined) {
       for (const value of Object.values(formData)) {
         dataY.push(Math.round((value.score + Number.EPSILON) * 100) / 100);
-        dataX.push(value._id);
+        dataX.push(value.date_created);
       }
 
       dataGraph = [
@@ -64,7 +64,7 @@
 
     setTimeout(() => {
       Plotly.newPlot("barChart", dataGraph, layout);
-    }, 1000);
+    }, 100);
   }, 1);
 
   function setModal() {
@@ -118,15 +118,19 @@
   }
 </script>
 
+<div class="relative mt-10 px-10 text-zinc-600">
+  <h1 class="block text-xl font-medium">eNPS graph</h1>
+  <p>Review eNPS by dep and survey moments</p>
+</div>
 <div class="subHeader">
   <button class="button" on:click={setModal}
-    ><img src="/src/images/filter.svg" alt="Zesty Surprise" /><strong
+    ><img src="/src/images/filter.svg" alt="Zesty Surprise" /><strong class="text-white"
       >Filter</strong
     ></button
   >
 </div>
 <div>
-  <div id="barChart" />
+  <div id="barChart" class="w-3/4 h-3/4"/>
 </div>
 {#if showModal}
   <FilterModal bind:showModal on:checkboxesChanged={handleCheckboxesChanged} />
