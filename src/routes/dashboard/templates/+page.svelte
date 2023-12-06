@@ -1,30 +1,20 @@
 <script lang="ts">
-    import { PUBLIC_BACKEND_URI } from "$env/static/public";
     import { goto, invalidateAll } from "$app/navigation";
-    import { onMount } from "svelte";
-    import { checkAuth } from "../../auth/auth";
-  import { fetchAPI } from "$lib/functions";
+    import { fetchAPI } from "$lib/functions";
 
     export let data: any;
-
-    onMount(async () => {
-        const isAuthorized: boolean = await checkAuth();
-
-        if (!isAuthorized) {
-            return;
-        }
-    });
-
+    
     const deleteRequest = async (id: string): Promise<void> => {
-        const res = await fetchAPI(`templates/${id}`, "DELETE")
+        const res = await fetchAPI(`templates/${id}`, "DELETE", data.cookie)
         const json = await res.json();
         return json;
     };
 
     const deleteTemplate = async (id: string): Promise<void> => {
         const res = await deleteRequest(id);
-        invalidateAll();
+        goto("/dashboard/templates")
     };
+
 </script>
 
 <!--Grid-->
@@ -64,7 +54,7 @@
         </div>
     </div>
     {#each data.templates as template}
-        <button on:click={() => goto(`templates/${template._id}`)}>
+        <button on:click={() => goto(`/dashboard/templates/${template._id}`)}>
             <div
                 class="bg-white shadow-md rounded-xl text-center h-96 w-46 border-custom hover:shadow-xl transition duration-250 ease-in-out"
             >
