@@ -33,7 +33,7 @@
 
   const saveTemplate = async (): Promise<void> => {
     let resp = await postTemplate(newTemplate);
-    goto(`/dashboard/templates`, { replaceState: true });
+    goto(`/dashboard/templates/${data.template._id}`, { replaceState: true });
   };
 </script>
 

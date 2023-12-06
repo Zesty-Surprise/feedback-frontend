@@ -1,6 +1,14 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   export let data: any;
+
+  const imageReplace = (html:string) => {
+    const find = '<amp-img alt="yoursuprise" src="https://s3-eu-west-1.amazonaws.com/tpd/logos/496768280000640005040244/0x0.png" width="50" height="10" layout="responsive">'
+    const rep = '<img alt="yoursuprise" src="https://s3-eu-west-1.amazonaws.com/tpd/logos/496768280000640005040244/0x0.png" class="mb-2"></img>'
+    const replaced = html.replace(find, rep).replace("</amp-img>", "")
+    return replaced
+  }
+
 </script>
 
 <div class="grid grid-cols-3 grid-rows-5 gap-4 text-zinc-600 m-10 w-3/4">
@@ -63,7 +71,7 @@
   <div
     class="flex justify-center h-auto p-10 col-span-3 row-span-4 row-start-2 rounded-2xl bg-color-highlight"
   >
-    {@html data.html}
-    <!-- <div class="w-96 h-32" >{data.html}</div> -->
+    {@html imageReplace(data.html)}
+    <!-- <div class="w-96 h-32" >{imageReplace(data.html)}</div> -->
   </div>
 </div>
