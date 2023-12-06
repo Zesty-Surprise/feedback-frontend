@@ -3,6 +3,7 @@
   import Modal from "$lib/components/Generic/Modal.svelte";
   import Survey from "$lib/components/Surveys/Survey.svelte";
   import { fetchAPI } from "$lib/functions";
+  import { InputChip } from "@skeletonlabs/skeleton";
 
   export let data: any;
 
@@ -18,19 +19,34 @@
       _id: "",
       name: "",
     },
-    participants: 0,
+    emails: [],
   };
+
+//   function isValidEmail(value: string): boolean {
+//     return value.includes("@") && value.includes(".");
+//   }
 
   async function handleSubmit() {
     const formData = {
-      emails: ["bobpanda.bp@gmail.com"],
-      form_count: survey.participants,
+      emails: survey.emails,
+      form_count: survey.emails.length,
       forms: [],
       template: survey.template._id,
       title: survey.title,
     };
     await fetchAPI("sessions", "POST", data.cookie, formData);
     invalidateAll();
+
+    survey = {
+      title: "",
+      date_created: "",
+      _id: "",
+      template: {
+        _id: "",
+        name: "",
+      },
+      emails: [],
+    };
   }
 
   async function handleDelete(id: string) {
@@ -53,14 +69,6 @@
         />
       </div>
       <div class="flex flex-row justify-between items-center">
-        <label for="name">Participants</label>
-        <input
-          class="w-2/4 h-8 rounded-md border border-[#2b21181a]"
-          type="text"
-          bind:value={survey.participants}
-        />
-      </div>
-      <div class="flex flex-row justify-between items-center">
         <label for="name">Template</label>
         <select
           class="w-2/4 rounded-md border border-[#2b21181a] pt-1 pb-1"
@@ -71,6 +79,13 @@
               >{template.name}
             </option>{/each}
         </select>
+      </div>
+      <div class="flex flex-row justify-between items-center">
+        <InputChip
+          bind:value={survey.emails}
+          name="chips"
+          placeholder="Enter a valid email"
+        />
       </div>
       <div class="pt-3 pb-2 self-center">
         <button
