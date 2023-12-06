@@ -18,8 +18,8 @@
     paper_bgcolor: "#FCF8F4",
     plot_bgcolor: "#FCF8F4",
   };
-  let dataY: Array<number> = [];
   let dataX: Array<string> = [];
+  let dataY: Array<number> = [];
 
   fetchAPI("sessions", "GET", data.cookie)
     .then((response) => {
@@ -35,8 +35,6 @@
     .catch((error) => {
       console.error("Fetch error:", error);
     });
-
-  //   fetch("http://localhost:8000/api/sessions")
 
   let loadChartData = setInterval(() => {
     if (formData != undefined) {
@@ -80,21 +78,30 @@
 
   async function getFilteredDepartments() {
     let response = await fetchAPI(
-      "sessions/" + formData[0]._id + "?dep=" + checkedCheckboxes,
+      "sessions?dep=" + checkedCheckboxes,
       "GET",
       data.cookie
     );
     let session = await response.json();
-    await updateGraph(session);
+    updateGraph(session);
   }
 
   function updateGraph(data: Object) {
-    let roundedScore = Math.round((data.score + Number.EPSILON) * 100) / 100;
+    console.log(data);
+
+    let newDataX: Array<string> = [];
+    let newDataY: Array<string> = [];
+
+    for (const value of Object.values(data)) {
+      newDataX.push(value._id);
+      newDataY.push(Math.round((value.score + Number.EPSILON) * 100) / 100);
+    }
+
     let newdata = [
       {
-        x: [data.template],
-        y: [roundedScore],
-        text: [roundedScore],
+        x: newDataX,
+        y: newDataY,
+        text: newDataY,
         type: "bar",
         marker: {
           color: "rgba(118, 137, 72, 0.40)",
