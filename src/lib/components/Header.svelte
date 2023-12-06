@@ -15,9 +15,9 @@
     </a>
   </div>
   <div class="header__login">
-    <a href="/dashboard">
+    <!-- <a href="/dashboard">
       <img src="/src/images/User.svg" alt="Login" />
-    </a>
+    </a> -->
   </div>
 </div>
 

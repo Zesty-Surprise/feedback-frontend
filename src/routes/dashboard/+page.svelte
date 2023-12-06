@@ -1,8 +1,5 @@
 <script lang="ts">
   import Plotly from "plotly.js-dist-min";
-  import { onMount } from "svelte";
-  import { checkAuth } from "/src/routes/auth/auth.ts";
-
   export let data;
 
   let promoters = data.sessions[0].promoters;
@@ -34,7 +31,7 @@
         value: enps,
         title: { text: "eNPS" },
         type: "indicator",
-        mode: "gauge+number+delta",
+        mode: "gauge+number",
         delta: { reference: 75 },
         gauge: {
           axis: { range: [-100, 100] },
@@ -58,7 +55,7 @@
 
 <div class="homepage">
   <div class="homepage__enps">
-    <h1>eNPS</h1>
+    <h1>{data.sessions[0].title}</h1>
   </div>
   <div class="homepage__info">
     <div class="homepage__pie-chart-wrapper">
@@ -104,7 +101,7 @@
   <div class="homepage__completed-by">
     <span
       >Completed by <strong
-        >{data.sessions[0].completed}
+        >{data.sessions[0].completed}/{data.sessions[0].participants}
       </strong>participants</span
     >
   </div>

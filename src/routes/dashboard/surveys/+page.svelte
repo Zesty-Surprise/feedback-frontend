@@ -123,7 +123,11 @@
   </div>
 </Modal>
 
-<div class="flex flex-wrap ml-12 mr-16">
+<div class="relative mt-10 px-10 text-zinc-600">
+  <h1 class="block text-xl font-medium">Survey's collection</h1>
+  <p>All current survey overview</p>
+</div>
+<div class="flex flex-wrap ml-10 mr-16">
   <Survey title="Create a new survey">
     <button
       class="flex justify-center items-center h-full w-full"

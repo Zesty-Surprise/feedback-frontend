@@ -3,7 +3,7 @@
   export let data: any;
 </script>
 
-<div class="grid grid-cols-3 grid-rows-5 gap-4 text-zinc-600 m-10">
+<div class="grid grid-cols-3 grid-rows-5 gap-4 text-zinc-600 m-10 w-3/4">
   <div class="col-span-3">
     <div class="flex justify-between rounded-md mb-5">
       <div>
@@ -61,7 +61,7 @@
     </div>
   </div>
   <div
-    class="flex justify-center col-span-3 row-span-4 row-start-2 border-2 border-color-accent rounded-2xl bg-white"
+    class="flex justify-center h-auto p-10 col-span-3 row-span-4 row-start-2 rounded-2xl bg-color-highlight"
   >
     {@html data.html}
     <!-- <div class="w-96 h-32" >{data.html}</div> -->

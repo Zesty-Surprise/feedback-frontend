@@ -2,8 +2,8 @@
   export let data: any;
 </script>
 
-{#each data.session.forms as form}
-  {form.form_id}
-{/each}
+<img class="w-3/4" src="/src/images/feedback.png" alt="" srcset="">
 
-<h1>feedback survey slug</h1>
+<!-- {#each data.session.forms as form}
+  {form.form_id}
+{/each} -->
