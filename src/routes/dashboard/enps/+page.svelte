@@ -89,13 +89,12 @@
     }
 
     function updateGraph(data: Object) {
-        console.log(data);
 
         let newDataX: Array<string> = [];
-        let newDataY: Array<string> = [];
+        let newDataY: Array<number> = [];
 
         for (const value of Object.values(data)) {
-            newDataX.push(value._id);
+            newDataX.push(value.date_created);
             newDataY.push(
                 Math.round((value.score + Number.EPSILON) * 100) / 100
             );

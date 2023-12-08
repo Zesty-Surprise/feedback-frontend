@@ -11,10 +11,16 @@ export const load: LayoutServerLoad = async (event) => {
     url: [`/dashboard/surveys/${event.params?.slug}`]
   },
   {
-    title: "Feedback",
-    icon: "mingcute:document-fill",
-    url: [`/dashboard/surveys/${event.params?.slug}/feedback`]
-  }];
+    title: "Home",
+    icon: "entypo:back",
+    url: [`/dashboard/surveys`]
+  },
+  // {
+  //   title: "Feedback",
+  //   icon: "mingcute:document-fill",s
+  //   url: [`/dashboard/surveys/${event.params?.slug}/feedback`]
+  // }
+];
 
   const regularSidebarItems = [
   {
@@ -32,11 +38,11 @@ export const load: LayoutServerLoad = async (event) => {
     icon: "ion:person",
     url: ["/dashboard/enps"]
   },
-  {
-    title: "Engagement",
-    icon: "iconoir:percentage-square-solid",
-    url: ["/dashboard/engagement"]
-  },
+  // {
+  //   title: "Engagement",
+  //   icon: "iconoir:percentage-square-solid",
+  //   url: ["/dashboard/engagement"]
+  // },
   {
     title: "Templates",
     icon: "heroicons-solid:template",

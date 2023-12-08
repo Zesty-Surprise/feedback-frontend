@@ -101,7 +101,7 @@
   <div class="homepage__completed-by">
     <span
       >Completed by <strong
-        >{data.sessions[0].completed}/{data.sessions[0].participants}
+        >{data.sessions[0].completed}/400
       </strong>participants</span
     >
   </div>

@@ -20,6 +20,7 @@
       name: "",
     },
     emails: [],
+    deployed: false
   };
 
 //   function isValidEmail(value: string): boolean {
@@ -33,6 +34,7 @@
       forms: [],
       template: survey.template._id,
       title: survey.title,
+      deployed: false
     };
     await fetchAPI("sessions", "POST", data.cookie, formData);
     invalidateAll();
@@ -46,6 +48,7 @@
         name: "",
       },
       emails: [],
+      deployed: false
     };
   }
 
