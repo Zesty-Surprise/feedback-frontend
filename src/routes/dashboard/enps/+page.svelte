@@ -10,8 +10,8 @@
     let checkedCheckboxes: String;
     let dataGraph: Object;
     let layout = {
-        height: window.screen.height - 250,
-        width: window.screen.width - 275,
+        height: window.screen.height - 375,
+        width: window.screen.width - 325,
         yaxis: {
             range: [-100, 100],
         },
@@ -93,7 +93,7 @@
         let newDataX: Array<string> = [];
         let newDataY: Array<number> = [];
 
-        for (const value of Object.values(data)) {
+        for (const value of Object.values(data)) {       
             newDataX.push(value.date_created);
             newDataY.push(
                 Math.round((value.score + Number.EPSILON) * 100) / 100
@@ -121,16 +121,13 @@
     }
 </script>
 
-<div class="relative mt-10 px-10 text-zinc-600">
-    <h1 class="block text-xl font-medium">eNPS graph</h1>
-    <p>Review eNPS by dep and survey moments</p>
-</div>
-<div class="subHeader">
+<div class="subHeader flex gap-5 content-center">
     <button class="button" on:click={setModal}
         ><img src="/images/filter.svg" alt="Zesty Surprise" /><strong
             class="text-white">Filter</strong
-        ></button
-    >
+        >
+    </button>
+    <span class="block text-xl font-medium">{checkedCheckboxes != undefined ? checkedCheckboxes : ""}</span>
 </div>
 <div>
     <div id="barChart" class="w-3/4 h-3/4" />
