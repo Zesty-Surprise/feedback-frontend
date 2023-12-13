@@ -6,6 +6,7 @@
   import { InputChip } from "@skeletonlabs/skeleton";
 
   export let data: any;
+  export let showModal: Boolean;
 
   let showSurveyModal = false;
   let showDeleteModal = false;
@@ -20,12 +21,9 @@
       name: "",
     },
     emails: [],
-    deployed: false
+    deployed: false,
   };
 
-//   function isValidEmail(value: string): boolean {
-//     return value.includes("@") && value.includes(".");
-//   }
 
   async function handleSubmit() {
     const formData = {
@@ -34,7 +32,7 @@
       forms: [],
       template: survey.template._id,
       title: survey.title,
-      deployed: false
+      deployed: false,
     };
     await fetchAPI("sessions", "POST", data.cookie, formData);
     invalidateAll();
@@ -48,7 +46,7 @@
         name: "",
       },
       emails: [],
-      deployed: false
+      deployed: false,
     };
   }
 
@@ -90,15 +88,18 @@
           placeholder="Enter a valid email"
         />
       </div>
-      <div class="pt-3 pb-2 self-center">
-        <button
-          class="text-white bg-color-accent hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
-          type="submit"
-          on:click={() => (showSurveyModal = false)}
-        >
-          Create
-        </button>
-      </div>
+    </div>
+    <div class="modal__apply pt-5">
+      <button
+        class="text-white bg-gray-300 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+        type="button"
+        on:click={() => (showSurveyModal = false)}>Cancel</button
+      >
+      <button
+        class="text-white bg-color-accent hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+        type="submit"
+        on:click={() => (showSurveyModal = false)}>Create</button
+      >
     </div>
   </form>
 </Modal>
@@ -143,7 +144,7 @@
       </div>
     </button>
   </Survey>
-  {#each data.sessions as session}
+  {#each [...data.sessions].reverse() as session}
     {@const date = new Date(session.date_created).toLocaleDateString()}
     <Survey title={session.title} {date}>
       <button
@@ -165,3 +166,10 @@
     </Survey>
   {/each}
 </div>
+
+<style>
+  .modal__apply {
+    display: flex;
+    justify-content: space-evenly;
+  }
+</style>
