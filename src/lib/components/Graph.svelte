@@ -4,8 +4,8 @@
   import { fetchAPI } from "$lib/functions.js";
 
   export let data: any;
-  export let apiCall: string;
-  console.log(apiCall);
+  export let apiCall: string; 
+  console.log(apiCall);  
 
   let showModal = false;
   let formData: Object;
@@ -20,7 +20,7 @@
     paper_bgcolor: "#FCF8F4",
     plot_bgcolor: "#FCF8F4",
   };
-  let dataX: Array<any> = [];
+  let dataX: Array<string> = [];
   let dataY: Array<number> = [];
 
   fetchAPI("sessions", "GET", data.cookie)
@@ -57,23 +57,15 @@
   }
 
   let loadChartData = setInterval(() => {
-    if (formData != undefined) {
-      for (let i = 1; i <= 7; i++) {
-        dataX.push(
-          formatDate(
-            formData[Object.keys(formData)[Object.keys(formData).length - i]]
-              .date_created
-          )
-        );
-        dataY.push(
-          Math.round(
-            (formData[Object.keys(formData)[Object.keys(formData).length - i]]
-              .score +
-              Number.EPSILON) *
-              100
-          ) / 100
-        );
-      }
+    if (formData != undefined) {        
+    
+    let sessionAmount: number = Object.keys(formData).length < 6 ? Object.keys(formData).length : 6;    
+    
+    for(let i = 1; i <= sessionAmount + 1; i++) {  
+        dataX.push(formatDate(formData[Object.keys(formData)[Object.keys(formData).length - i]].date_created))
+        dataY.push(Math.round((formData[Object.keys(formData)[Object.keys(formData).length - i]].score + Number.EPSILON) * 100) / 100)
+    }
+    
 
       dataGraph = [
         {
@@ -127,20 +119,12 @@
     //   newDataY.push(Math.round((value.score + Number.EPSILON) * 100) / 100);
     // }
 
-    for (let i = 1; i <= 7; i++) {
-      newDataX.push(
-        formatDate(
-          data[Object.keys(data)[Object.keys(data).length - i]].date_created
-        )
-      );
-      newDataY.push(
-        Math.round(
-          (data[Object.keys(data)[Object.keys(data).length - i]].score +
-            Number.EPSILON) *
-            100
-        ) / 100
-      );
-    }
+    let sessionAmount: number = Object.keys(data).length < 6 ? Object.keys(data).length : 6;    
+    
+    for(let i = 1; i <= sessionAmount + 1; i++) {  
+        newDataX.push(formatDate(data[Object.keys(data)[Object.keys(data).length - i]].date_created))
+        newDataY.push(Math.round((data[Object.keys(data)[Object.keys(data).length - i]].score + Number.EPSILON) * 100) / 100)
+    }    
 
     let newdata = [
       {
