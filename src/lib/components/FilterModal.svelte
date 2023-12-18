@@ -29,7 +29,7 @@
         <div class="modal__options">
             <div class="modal__option-column">
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="it"
                     value="IT"
@@ -39,7 +39,7 @@
                 <label for="it">IT</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="production"
                     value="Production"
@@ -49,7 +49,7 @@
                 <label for="production">Production</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="people"
                     value="People"
@@ -59,7 +59,7 @@
                 <label for="people">People</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="campus"
                     value="Campus"
@@ -69,7 +69,7 @@
                 <label for="campus">Campus</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="finance"
                     value="Finance"
@@ -81,7 +81,7 @@
 
             <div class="modal__option-column">
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="gifts"
                     value="Gifts"
@@ -91,7 +91,7 @@
                 <label for="gifts">Gifts</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="innovation"
                     value="Innovation"
@@ -101,7 +101,7 @@
                 <label for="innovation">Innovation</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="ecommerce"
                     value="E-commerce"
@@ -111,7 +111,7 @@
                 <label for="ecommerce">E-commerce</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="customerService"
                     value="Customer Service"
@@ -121,7 +121,7 @@
                 <label for="customerService">Customer service</label>
 
                 <input
-                    type="radio"
+                    type="checkbox"
                     class="modalCheckbox"
                     name="purchase"
                     value="Purchase"
@@ -201,7 +201,7 @@
         position: relative;
     }
 
-    input[type="radio"] {
+    input[type="checkbox"] {
         display: none;
     }
 

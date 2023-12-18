@@ -9,7 +9,7 @@
 
     function handleCheckboxesChanged(event: any) {
         checkedBox = event.detail;
-        if (checkedBox == null) {
+        if (checkedBox == null || checkedBox.length == 0) {
             forms = data.completedForms;
         } else {
             forms = filterForms(data.completedForms, checkedBox);
@@ -17,7 +17,6 @@
 
         currentPage = 0;
         maxPages = Math.ceil(forms.length / chunkSize) - 1;
-        /* pages = Array.from(Array(maxPages + 1).keys()); */
 
         currentForms = chunkedForms(forms, currentPage);
     }
@@ -35,7 +34,6 @@
     let currentPage: number = 0;
     let chunkSize = forms.length <= 8 ? forms.length : 8;
     let maxPages = forms.length / chunkSize - 1;
-    /* let pages = Array.from(Array(maxPages + 1).keys()); */
 
     let currentForms = chunkedForms(forms, currentPage);
 
@@ -64,13 +62,7 @@
             currentForms = chunkedForms(forms, currentPage);
         }
     }
-    function setPage(page: number) {
-        currentPage = page;
-        currentForms = chunkedForms(forms, currentPage);
-    }
 </script>
-
-<!-- <img class="w-3/4" src="/images/feedback.png" alt="" srcset="" /> -->
 
 {#if forms[0] != undefined}
     <div class="mt-10 mb-6">
@@ -80,7 +72,7 @@
             ><img
                 src="/images/filter.svg"
                 alt="Zesty Surprise"
-                class="max-w-[25px] max-w-[25px]"
+                class="max-w-[25px] max-h-[25px]"
             /><strong class="text-white">Filter</strong></button
         >
     </div>
@@ -140,46 +132,19 @@
                 </button>
             </div>
         </div>
-        <!-- Page selector -->
-        <!-- <nav -->
-        <!--     aria-label="Written feedback page selector" -->
-        <!--     class="flex justify-center items-center sticky top-[85vh]" -->
-        <!-- > -->
-        <!--     <ul class="inline-flex -space-x-px text-base h-10"> -->
-        <!--         <li> -->
-        <!--             <button -->
-        <!--                 on:click={previousPage} -->
-        <!--                 class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700" -->
-        <!--                 >Previous</button -->
-        <!--             > -->
-        <!--         </li> -->
-        <!--         {#each pages as page} -->
-        <!--             <li> -->
-        <!--                 {#if currentPage == page} -->
-        <!--                     <button -->
-        <!--                         class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700" -->
-        <!--                         >{page}</button -->
-        <!--                     > -->
-        <!--                 {:else} -->
-        <!--                     <button -->
-        <!--                         on:click={() => setPage(page)} -->
-        <!--                         class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700" -->
-        <!--                         >{page}</button -->
-        <!--                     > -->
-        <!--                 {/if} -->
-        <!--             </li> -->
-        <!--         {/each} -->
-        <!--         <li> -->
-        <!--             <button -->
-        <!--                 on:click={nextPage} -->
-        <!--                 class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700" -->
-        <!--                 >Next</button -->
-        <!--             > -->
-        <!--         </li> -->
-        <!--     </ul> -->
-        <!-- </nav> -->
     </div>
 {:else}
+    <div class="mt-10 mb-6">
+        <button
+            class="flex items-center bg-[#de896e] rounded-full pt-[8px] px-[16px] pb-[10px] ml-10"
+            on:click={() => (showModal = !showModal)}
+            ><img
+                src="/images/filter.svg"
+                alt="Zesty Surprise"
+                class="max-w-[25px] max-h-[25px]"
+            /><strong class="text-white">Filter</strong></button
+        >
+    </div>
     <h1 class="h-full flex justify-center items-center text-4xl">
         No feedback to display
     </h1>
