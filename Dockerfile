@@ -1,6 +1,8 @@
-FROM node:20
+FROM node:21-alpine
 
 WORKDIR /app
+
+ARG PUBLIC_BACKEND_URI="https://amp.test.axelzublena.com/api/"
 
 COPY package.json ./
 COPY package-lock.json ./
