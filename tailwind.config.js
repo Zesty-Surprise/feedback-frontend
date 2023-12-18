@@ -18,7 +18,7 @@ export default {
 					text: "#595959",
 					text_light: "#A19F9F",
 				}
-			}
+			},
 		},
 	},
 	plugins: [
