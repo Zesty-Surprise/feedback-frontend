@@ -67,7 +67,7 @@
 {#if forms[0] != undefined}
     <div class="mt-10 mb-6">
         <button
-            class="flex items-center bg-[#de896e] rounded-full pt-[8px] px-[16px] pb-[10px] ml-10"
+            class="flex items-center bg-[#de896e] rounded-full gap-1 pt-[8px] px-[16px] pb-[10px] ml-10"
             on:click={() => (showModal = !showModal)}
             ><img
                 src="/images/filter.svg"
