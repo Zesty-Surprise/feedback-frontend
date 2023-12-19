@@ -56,7 +56,7 @@
             />
             <label
                 for={department}
-                class="mb-[15px] cursor-pointer flex relative pl-[35px] items-center py-2"
+                class="mb-[15px] cursor-pointer flex relative pl-[35px] items-center"
                 >{department}</label
             >
         {/each}
