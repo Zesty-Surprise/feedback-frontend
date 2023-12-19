@@ -7,7 +7,7 @@
   import { destinations, emptySurvey } from "./types";
   import CreateSurveyForm from "$lib/components/Surveys/CreateSurveyForm.svelte";
   export let data: any;
-  
+
   let showSurveyModal = false;
   let showDeleteModal = false;
   let deleteId: string;
@@ -69,7 +69,12 @@
 
 <Modal bind:showModal={showSurveyModal}>
   <p slot="header" class="text-color-text font-semibold">Create a new survey</p>
-  <CreateSurveyForm handleSubmit={handleSubmit} survey={survey} templates={data.templates} recipientLists={destinations}/>
+  <CreateSurveyForm
+    {handleSubmit}
+    {survey}
+    templates={data.templates}
+    recipientLists={destinations}
+  />
 </Modal>
 
 <Modal bind:showModal={showDeleteModal}>
@@ -95,53 +100,43 @@
 </Modal>
 
 <div class="relative mt-10 px-10 text-zinc-600">
-    <h1 class="block text-xl font-medium">Survey's collection</h1>
-    <p>All current survey overview</p>
+  <h1 class="block text-xl font-medium">Survey's collection</h1>
+  <p>All current survey overview</p>
 </div>
 <div class="flex flex-wrap ml-10 mr-16">
-    <Survey title="Create a new survey">
-        <button
-            class="flex justify-center items-center h-full w-full"
-            on:click={() => (showSurveyModal = true)}
-        >
-            <div
-                class="bg-color-accent rounded-full w-14 h-14 flex justify-center items-center"
-            >
-                <iconify-icon
-                    class="text-white"
-                    icon="typcn:plus"
-                    width="48px"
-                />
-            </div>
-        </button>
-    </Survey>
-    {#each [...data.sessions].reverse() as session}
-        {@const date = new Date(session.date_created).toLocaleDateString()}
-        <Survey title={session.title} {date}>
-            <button
-                class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
-                on:click={() => {
-                    goto(`/dashboard/surveys/${session._id}`);
-                }}
-            >
-                <iconify-icon
-                    class="text-white"
-                    icon="uis:chart"
-                    width="36px"
-                />
-            </button>
+  <Survey title="Create a new survey">
+    <button
+      class="flex justify-center items-center h-full w-full"
+      on:click={() => (showSurveyModal = true)}
+    >
+      <div
+        class="bg-color-accent rounded-full w-14 h-14 flex justify-center items-center"
+      >
+        <iconify-icon class="text-white" icon="typcn:plus" width="48px" />
+      </div>
+    </button>
+  </Survey>
+  {#each [...data.sessions].reverse() as session}
+    {@const date = new Date(session.date_created).toLocaleDateString()}
+    <Survey title={session.title} {date}>
+      <button
+        class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
+        on:click={() => {
+          goto(`/dashboard/surveys/${session._id}`);
+        }}
+      >
+        <iconify-icon class="text-white" icon="uis:chart" width="36px" />
+      </button>
 
-            <button
-                class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
-                on:click={() => (showDeleteModal = true)}
-                on:click={() => (deleteId = session._id)}
-            >
-                <iconify-icon
-                    class="text-white"
-                    icon="ph:trash-fill"
-                    width="40px"
-                />
-            </button>
-        </Survey>
-    {/each}
+      <button
+        class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
+        on:click={() => {
+          deleteId = session._id;
+          showDeleteModal = true;
+        }}
+      >
+        <iconify-icon class="text-white" icon="ph:trash-fill" width="40px" />
+      </button>
+    </Survey>
+  {/each}
 </div>
