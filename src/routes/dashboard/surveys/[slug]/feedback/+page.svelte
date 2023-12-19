@@ -9,7 +9,7 @@
 
     function handleCheckboxesChanged(event: any) {
         checkedBox = event.detail;
-        if (checkedBox == null || checkedBox.length == 0) {
+        if (checkedBox == undefined || checkedBox == "") {
             forms = data.completedForms;
         } else {
             forms = filterForms(data.completedForms, checkedBox);
