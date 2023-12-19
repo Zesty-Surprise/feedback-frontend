@@ -1,5 +1,5 @@
 import { env } from "$env/dynamic/public";
-import { error } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 
 export async function fetchAPI(
   route: string,
@@ -35,8 +35,8 @@ export async function fetchAPI(
 export async function isLoggedIn(access_token: string) {
   const result = await fetchAPI("token/valid", "GET", access_token);
   if (result.status === 401) {
-    throw error(401, {
-      message: "Session expired",
-    });
+    throw redirect(307, '/auth/login');
   }
+  let resp = await result.json();
+  return resp
 }

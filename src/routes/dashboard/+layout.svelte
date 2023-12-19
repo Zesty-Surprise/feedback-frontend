@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
-
   import { TabGroup, TabAnchor } from "@skeletonlabs/skeleton";
   export let data;
 
@@ -10,14 +7,13 @@
   import Header from "$lib/components/Header.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";
 
-  let sidebarItems : {
-    title:string,
-    icon:string,
-    url:string[]
+  let sidebarItems: {
+    title: string;
+    icon: string;
+    url: string[];
   }[];
 
-  $: sidebarItems = data.side
-  
+  $: sidebarItems = data.side;
 </script>
 
 <AppShell
