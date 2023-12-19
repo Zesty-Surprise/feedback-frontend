@@ -1,11 +1,15 @@
 <script lang="ts">
   import Graph from "$lib/components/Graph.svelte";
+  
   export let data: any;
-  let apiCall: string = "enps page";
+
+  let range: number = -100
+  let displayVariable = "score"  
 </script>
 
 <Graph 
     {data}
-    {apiCall}
+    {range}
+    {displayVariable}
     >
 </Graph>

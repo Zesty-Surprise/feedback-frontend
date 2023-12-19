@@ -1,7 +1,15 @@
 <script lang="ts">
   import Graph from "$lib/components/Graph.svelte";
+
   export let data: any;
-  let apiCall: string = "engagement page";
+
+  let range: number = 0;
+  let displayVariable = "participation"
 </script>
 
-<Graph {data} {apiCall}></Graph>
+<Graph 
+    {data}
+    {range}
+    {displayVariable}
+    >
+</Graph>
