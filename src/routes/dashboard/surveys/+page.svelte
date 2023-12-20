@@ -4,41 +4,20 @@
   import Survey from "$lib/components/Surveys/Survey.svelte";
   import { fetchAPI } from "$lib/functions";
   import { InputChip } from "@skeletonlabs/skeleton";
-
+  import { destinations, emptySurvey } from "./types";
+  import CreateSurveyForm from "$lib/components/Surveys/CreateSurveyForm.svelte";
   export let data: any;
 
   let showSurveyModal = false;
   let showDeleteModal = false;
-  let deleteId = "";
+  let deleteId: string;
+  let survey = emptySurvey;
 
-  let survey = {
-    title: "",
-    date_created: "",
-    _id: "",
-    template: {
-      _id: "",
-      name: "",
-    },
-    emails: [],
-    deployed: false
+  let isValidEmail = (value: string): boolean => {
+    return value.includes("@") && value.includes(".");
   };
 
-//   function isValidEmail(value: string): boolean {
-//     return value.includes("@") && value.includes(".");
-//   }
-
-  async function handleSubmit() {
-    const formData = {
-      emails: survey.emails,
-      form_count: survey.emails.length,
-      forms: [],
-      template: survey.template._id,
-      title: survey.title,
-      deployed: false
-    };
-    await fetchAPI("sessions", "POST", data.cookie, formData);
-    invalidateAll();
-
+  let clearSurvey = () => {
     survey = {
       title: "",
       date_created: "",
@@ -48,59 +27,54 @@
         name: "",
       },
       emails: [],
-      deployed: false
+      deployed: false,
     };
-  }
+  };
 
-  async function handleDelete(id: string) {
-    await fetchAPI(`sessions/${id}`, "DELETE", data.cookie);
+  let handleSubmit = async () => {
+    if (
+      survey.title.trim() === "" ||
+      !survey.template._id ||
+      !survey.template.name ||
+      !Array.isArray(survey.emails) ||
+      survey.emails.length === 0 ||
+      !survey.emails.every((email) => isValidEmail(email))
+    ) {
+      alert("Invalid survey submission");
+      clearSurvey();
+      return;
+    }
+
+    const formData = {
+      emails: survey.emails,
+      form_count: survey.emails.length,
+      forms: [],
+      template: survey.template._id,
+      title: survey.title,
+      deployed: false,
+    };
+    await fetchAPI("sessions", "POST", data.cookie, formData);
     invalidateAll();
-  }
+
+    clearSurvey();
+    showSurveyModal = false;
+  };
+
+  let handleDelete = async (id: string) => {
+    await fetchAPI(`sessions/${id}`, "DELETE", data.cookie);
+    showDeleteModal = false;
+    invalidateAll();
+  };
 </script>
 
 <Modal bind:showModal={showSurveyModal}>
   <p slot="header" class="text-color-text font-semibold">Create a new survey</p>
-
-  <form on:submit|preventDefault={handleSubmit}>
-    <div class="flex flex-col mt-8 ml-8 mr-8 gap-6 text-color-text">
-      <div class="flex flex-row justify-between items-center">
-        <label for="name">Title</label>
-        <input
-          class="w-2/4 h-8 rounded-md border border-[#2b21181a]"
-          type="text"
-          bind:value={survey.title}
-        />
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <label for="name">Template</label>
-        <select
-          class="w-2/4 rounded-md border border-[#2b21181a] pt-1 pb-1"
-          bind:value={survey.template}
-        >
-          {#each data.templates as template}
-            <option class="bg-color-layout" value={template}
-              >{template.name}
-            </option>{/each}
-        </select>
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <InputChip
-          bind:value={survey.emails}
-          name="chips"
-          placeholder="Enter a valid email"
-        />
-      </div>
-      <div class="pt-3 pb-2 self-center">
-        <button
-          class="text-white bg-color-accent hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
-          type="submit"
-          on:click={() => (showSurveyModal = false)}
-        >
-          Create
-        </button>
-      </div>
-    </div>
-  </form>
+  <CreateSurveyForm
+    {handleSubmit}
+    {survey}
+    templates={data.templates}
+    recipientLists={destinations}
+  />
 </Modal>
 
 <Modal bind:showModal={showDeleteModal}>
@@ -111,7 +85,6 @@
     <button
       class="text-white bg-red-500 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
       type="submit"
-      on:click={() => (showDeleteModal = false)}
       on:click={() => handleDelete(deleteId)}
     >
       Delete
@@ -143,7 +116,7 @@
       </div>
     </button>
   </Survey>
-  {#each data.sessions as session}
+  {#each [...data.sessions].reverse() as session}
     {@const date = new Date(session.date_created).toLocaleDateString()}
     <Survey title={session.title} {date}>
       <button
@@ -157,8 +130,10 @@
 
       <button
         class="bg-color-accent rounded-2xl w-14 h-14 flex justify-center items-center hover:brightness-90 transition duration-200"
-        on:click={() => (showDeleteModal = true)}
-        on:click={() => (deleteId = session._id)}
+        on:click={() => {
+          deleteId = session._id;
+          showDeleteModal = true;
+        }}
       >
         <iconify-icon class="text-white" icon="ph:trash-fill" width="40px" />
       </button>
