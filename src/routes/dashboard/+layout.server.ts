@@ -38,11 +38,11 @@ export const load: LayoutServerLoad = async (event) => {
             icon: "ion:person",
             url: ["/dashboard/enps"]
         },
-        // {
-        //   title: "Engagement",
-        //   icon: "iconoir:percentage-square-solid",
-        //   url: ["/dashboard/engagement"]
-        // },
+        {
+          title: "Engagement",
+          icon: "iconoir:percentage-square-solid",
+          url: ["/dashboard/engagement"]
+        },
         {
             title: "Templates",
             icon: "heroicons-solid:template",
