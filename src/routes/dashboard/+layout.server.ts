@@ -1,5 +1,5 @@
 import type { LayoutServerLoad } from "./$types";
-import { isLoggedIn } from '$lib/functions.js';
+import { isLoggedIn } from "$lib/functions.js";
 
 export const load: LayoutServerLoad = async (event) => {
 
@@ -76,7 +76,6 @@ export const load: LayoutServerLoad = async (event) => {
     }
   ];
 
-
   return {
     pathname: event.url.pathname,
     side: event.url.pathname.includes(`/dashboard/surveys/${event.params?.slug}`) ? surveySidebarItems : regularSidebarItems,
@@ -86,4 +85,3 @@ export const load: LayoutServerLoad = async (event) => {
     filterUser: response.filter 
   };
 };
-

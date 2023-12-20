@@ -47,7 +47,7 @@
         name="role"
       >
         <option class="bg-color-layout" value="it">IT</option>
-        <option class="bg-color-layout" value="gifts">Gifts</option>
+        <ogtion class="bg-color-layout" value="gifts">Gifts</ogtion>
         <option class="bg-color-layout" value="people">People</option>
         <option class="bg-color-layout" value="production">Production</option>
         <option class="bg-color-layout" value="e-commerce">E-Commerce</option>

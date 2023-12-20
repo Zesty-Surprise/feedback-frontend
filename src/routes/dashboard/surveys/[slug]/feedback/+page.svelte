@@ -7,6 +7,7 @@
 
   let showModal: boolean = false;
   let checkedBox: string;
+  $: previousFilter = checkedBox;
 
   function handleCheckboxesChanged(event: any) {
     checkedBox = event.detail;
@@ -21,6 +22,7 @@
 
     currentForms = chunkedForms(forms, currentPage);
   }
+
   function filterForms(forms: Array<any>, department: string) {
     let array = [];
     for (let i = 0; i < forms.length; i++) {
@@ -28,7 +30,6 @@
         array.push(forms[i]);
       }
     }
-
     return array;
   }
 
@@ -63,7 +64,7 @@
 </script>
 
 {#if forms[0] != undefined}
-  {#if data.filter === undefined}
+  {#if data.filter === null}
     <div class="mt-10 mb-6">
       <button
         class="flex items-center bg-[#de896e] rounded-full gap-1 pt-[8px] px-[16px] pb-[10px] ml-10"
@@ -149,5 +150,9 @@
 {/if}
 
 {#if showModal}
-  <FilterModal bind:showModal on:checkboxesChanged={handleCheckboxesChanged} />
+  <FilterModal
+    bind:showModal
+    bind:previousFilter
+    on:checkboxesChanged={handleCheckboxesChanged}
+  />
 {/if}

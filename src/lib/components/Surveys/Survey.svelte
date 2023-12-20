@@ -7,7 +7,7 @@
     <div class="flex items-center justify-evenly h-52 w-52 bg-color-highlight rounded-lg">
         <slot/>
     </div>
-    <div class="pl-1">
+    <div class="pl-1 max-w-[208px]">
         <p class="text-color-text_light font-light">{date}</p>
         <p class="text-color-accent font-semibold break-all">{title}</p>
     </div>
