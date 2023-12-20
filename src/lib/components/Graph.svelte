@@ -44,8 +44,8 @@
             const year = dateObject.getFullYear();
             const hours = dateObject.getHours();
             const minutes = dateObject.getMinutes();
-            const seconds = dateObject.getSeconds();
-            const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+            // const seconds = dateObject.getSeconds();
+            const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}`;
 
             return formattedDate;
         } catch (error) {
@@ -69,7 +69,11 @@
                 let currentEntry = formData[currentIndex];
 
                 if (currentEntry) {
-                    dataX.push(formatDate(currentEntry.date_created));
+                    dataX.push(
+                        currentEntry.title +
+                            "<br>" +
+                            formatDate(currentEntry.date_created)
+                    );
 
                     if (displayVariable === "score") {
                         dataY.push(
@@ -145,7 +149,11 @@
             let currentEntry = data[currentIndex];
 
             if (currentEntry) {
-                newDataX.push(formatDate(currentEntry.date_created));
+                newDataX.push(
+                    currentEntry.title +
+                        "<br>" +
+                        formatDate(currentEntry.date_created)
+                );
                 if (displayVariable === "score") {
                     newDataY.push(
                         Math.round(
