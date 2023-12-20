@@ -1,5 +1,5 @@
 import { env } from "$env/dynamic/public";
-import { error, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 
 export async function fetchAPI(
     route: string,
@@ -33,8 +33,10 @@ export async function fetchAPI(
 }
 
 export async function isLoggedIn(access_token: string) {
-    const result = await fetchAPI("token/valid", "GET", access_token);
-    if (result.status === 401) {
-        throw redirect(303, "/auth/login")
-    }
+  const result = await fetchAPI("token/valid", "GET", access_token);
+  if (result.status === 401) {
+    throw redirect(303, '/auth/login');
+  }
+  let resp = await result.json();
+  return resp
 }
