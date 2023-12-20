@@ -6,6 +6,7 @@
 
     let showModal: boolean = false;
     let checkedBox: string;
+    $: previousFilter = checkedBox;
 
     function handleCheckboxesChanged(event: any) {
         checkedBox = event.detail;
@@ -27,7 +28,6 @@
                 array.push(forms[i]);
             }
         }
-
         return array;
     }
 
@@ -153,6 +153,7 @@
 {#if showModal}
     <FilterModal
         bind:showModal
+        bind:previousFilter
         on:checkboxesChanged={handleCheckboxesChanged}
     />
 {/if}

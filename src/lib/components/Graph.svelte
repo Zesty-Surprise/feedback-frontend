@@ -10,6 +10,7 @@
     let showModal = false;
     let formData: Object;
     let checkedCheckboxes: String;
+    $: previousFilter = checkedCheckboxes;
     let layout = {
         height: window.screen.height - 375,
         width: window.screen.width - 325,
@@ -161,6 +162,8 @@
                         ) / 100
                     );
                 } else {
+                    console.log(currentEntry);
+
                     newDataY.push(
                         Math.round(
                             (currentEntry.completed /
@@ -209,6 +212,7 @@
 {#if showModal}
     <FilterModal
         bind:showModal
+        bind:previousFilter
         on:checkboxesChanged={handleCheckboxesChanged}
     />
 {/if}
