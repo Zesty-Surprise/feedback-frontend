@@ -1,5 +1,5 @@
 // +page.server.ts
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { PUBLIC_BACKEND_URI } from "$env/static/public";
 import type { Actions } from './$types';
 
@@ -30,11 +30,10 @@ export const actions: Actions = {
             cookies.set('access_token', token.access_token, {
                 path: '/dashboard',
             });
-
             
             throw redirect(302, '/dashboard');
           } else {
-            return { errors: await response.json() }
+            return fail(404, {fail: true, details: "Incorrect Password or Email!" })
         }  
         } else {
             return {
