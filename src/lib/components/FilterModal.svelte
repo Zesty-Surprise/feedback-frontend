@@ -1,11 +1,12 @@
 <script lang="ts">
     export let showModal: Boolean;
+    export let previousFilter: string;
 
     import { createEventDispatcher } from "svelte";
     import Modal from "$lib/components/Generic/Modal.svelte";
 
-    let checkedBox: string;
-    let checkedBoxToUncheck: string;
+    let checkedBox: string = previousFilter || "";
+    let checkedBoxToUncheck: string = previousFilter || "";
     const dispatch = createEventDispatcher();
 
     function handleCheckbox() {

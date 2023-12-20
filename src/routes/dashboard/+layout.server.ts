@@ -1,5 +1,5 @@
 import type { LayoutServerLoad } from "./$types";
-import { isLoggedIn } from '$lib/functions.js';
+import { isLoggedIn } from "$lib/functions.js";
 
 export const load: LayoutServerLoad = async (event) => {
 
@@ -38,11 +38,11 @@ export const load: LayoutServerLoad = async (event) => {
             icon: "ion:person",
             url: ["/dashboard/enps"]
         },
-        // {
-        //   title: "Engagement",
-        //   icon: "iconoir:percentage-square-solid",
-        //   url: ["/dashboard/engagement"]
-        // },
+        {
+          title: "Engagement",
+          icon: "iconoir:percentage-square-solid",
+          url: ["/dashboard/engagement"]
+        },
         {
             title: "Templates",
             icon: "heroicons-solid:template",
@@ -62,4 +62,3 @@ export const load: LayoutServerLoad = async (event) => {
         cookie: event.cookies.get("access_token")
     };
 };
-
