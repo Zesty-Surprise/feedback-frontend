@@ -1,27 +1,30 @@
 <script lang="ts">
   import Plotly from "plotly.js-dist-min";
+
   export let data;
 
-  let promoters = data.sessions[0].promoters;
-  let demoters = data.sessions[0].demoter;
-  let passives = data.sessions[0].passive;
+  let latestSession = data.sessions[data.sessions.length - 1];
+
+  let promoters = latestSession.promoters;
+  let demoters = latestSession.demoter;
+  let passives = latestSession.passive;
 
   let total = promoters + demoters + passives;
 
-  let promotersPercent = (promoters / total) * 100;
-  let demotersPercent = (demoters / total) * 100;
-  let passivesPercent = (passives / total) * 100;
+  let promotersPercent = promoters ? (promoters / total) * 100 : 0;
+  let demotersPercent = demoters ? (demoters / total) * 100 : 0;
+  let passivesPercent = passives ? (passives / total) * 100 : 0;
 
-  let gaugeColour = "";
+  let enps = latestSession.score;
 
-  let enps = data.sessions[0].score;
-
-  if (enps <= 0) {
-    gaugeColour = "#de896e";
-  } else if (enps < 20 && enps >= 1) {
-    gaugeColour = "yellow";
-  } else {
-    gaugeColour = "#00c100";
+  function getGaugeColor() {
+    if (enps <= 0) {
+      return "#de896e";
+    } else if (enps < 20 && enps >= 1) {
+      return "yellow";
+    } else {
+      return "#00c100";
+    }
   }
 
   setTimeout(() => {
@@ -35,7 +38,7 @@
         delta: { reference: 75 },
         gauge: {
           axis: { range: [-100, 100] },
-          bar: { color: gaugeColour, thickness: 1 },
+          bar: { color: getGaugeColor(), thickness: 1 },
           steps: [{ range: [-100, 100], color: "white" }],
           bordercolor: "transparent",
         },
@@ -55,7 +58,7 @@
 
 <div class="homepage">
   <div class="homepage__enps">
-    <h1>{data.sessions[0].title}</h1>
+    <h1>{latestSession.title}</h1>
   </div>
   <div class="homepage__info">
     <div class="homepage__pie-chart-wrapper">
@@ -101,7 +104,7 @@
   <div class="homepage__completed-by">
     <span
       >Completed by <strong
-        >{data.sessions[0].completed}/400
+        >{latestSession.completed}/{latestSession.participants}
       </strong>participants</span
     >
   </div>
