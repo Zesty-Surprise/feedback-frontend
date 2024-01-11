@@ -5,7 +5,13 @@ export const load: LayoutServerLoad = async (event) => {
 
   const response = await isLoggedIn(event.cookies.get("access_token") ?? ""); 
   
-  const surveySidebarItems = [{
+  const surveySidebarItems = [
+      {
+        title: "Surveys",
+        icon: "entypo:back",
+        url: [`/dashboard/surveys`]
+      },
+      {
         title: "Overview",
         icon: "teenyicons:pie-chart-solid",
         url: [`/dashboard/surveys/${event.params?.slug}`]
@@ -15,11 +21,6 @@ export const load: LayoutServerLoad = async (event) => {
           icon: "mingcute:document-fill",
           url: [`/dashboard/surveys/${event.params?.slug}/feedback`]
       },
-      {
-        title: "Home",
-        icon: "entypo:back",
-        url: [`/dashboard/surveys`]
-      }
   ];
 
   const regularSidebarItems = response.permissions.includes("template:read" && "auth:read") ? [
