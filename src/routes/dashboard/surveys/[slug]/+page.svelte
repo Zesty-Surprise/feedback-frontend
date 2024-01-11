@@ -1,7 +1,7 @@
 <script lang="ts">
   import Modal from "$lib/components/Generic/Modal.svelte";
   import Plotly from "plotly.js-dist-min";
-  import ApexCharts from 'apexcharts'
+  import ApexCharts from "apexcharts";
   import { fetchAPI } from "$lib/functions";
   import { error } from "@sveltejs/kit";
   let showDeployModal = false;
@@ -26,7 +26,7 @@
   let passives = data.session.passive;
   let total = promoters + demoters + passives;
 
-  let engagement = (data.session.completed/data.session.participants) * 100;
+  let engagement = (data.session.completed / data.session.participants) * 100;
 
   let promotersPercent = (promoters / total) * 100;
   let demotersPercent = (demoters / total) * 100;
@@ -84,50 +84,50 @@
 
   setTimeout(() => {
     var options = {
-    chart: {
-      height: 200,
-      type: "radialBar",
-    },
+      chart: {
+        height: 200,
+        type: "radialBar",
+      },
 
-    series: [engagement],
+      series: [engagement],
 
-    plotOptions: {
-      radialBar: {
-        hollow: {
-          margin: 15,
-          size: "70%",
-        },
-
-        dataLabels: {
-          showOn: "always",
-          name: {
-            offsetY: -10,
-            show: false,
-            color: "#888",
-            fontSize: "13px",
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 15,
+            size: "70%",
           },
-          value: {
-            color: "#111",
-            fontSize: "30px",
-            show: true,
+
+          dataLabels: {
+            showOn: "always",
+            name: {
+              offsetY: -10,
+              show: false,
+              color: "#888",
+              fontSize: "13px",
+            },
+            value: {
+              color: "#111",
+              fontSize: "30px",
+              show: true,
+            },
           },
         },
       },
-    },
 
-    fill: {
-      colors: ["#DE896E"],
-      opacity: 0.9,
-      type: 'solid',
-    },
-    
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Progress"],
-  };
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  chart.render();
+      fill: {
+        colors: ["#DE896E"],
+        opacity: 0.9,
+        type: "solid",
+      },
+
+      stroke: {
+        lineCap: "round",
+      },
+      labels: ["Progress"],
+    };
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
   });
 </script>
 
@@ -152,8 +152,10 @@
     </button>
   </div>
 </Modal>
-<div class="grid grid-cols-2 grid-rows-1 gap-4 m-5">
-  <div class="flex flex-col bg-white text-black p-6 rounded-lg justify-between h-fit">
+<div class="grid grid-cols-2 auto-rows-min gap-4 m-5">
+  <div
+    class="flex flex-col bg-white text-color-text p-6 rounded-lg justify-between h-fit"
+  >
     <div class="flex justify-between">
       <div
         class="flex items-center text-center rounded-full bg-color-accent px-4"
@@ -182,11 +184,11 @@
     <div class="flex justify-between">
       <div class="flex flex-col ml-2">
         <div class="flex mb-6">
-          <p class="text-lg">Average Score</p>
+          <p class="text-lg text-color-text">Average Score</p>
         </div>
         <div class="flex">
           <p class="text-2xl font-light text-zinc-500">
-            <strong class="text-black text-5xl">
+            <strong class="text-color-text text-5xl">
               {(sum / data.session.forms.length).toFixed(1)}
             </strong>
             / 10
@@ -225,44 +227,82 @@
     </div>
   </div>
 
-    <div class="flex flex-col bg-white text-black p-6 rounded-lg">
-      <div
-        class="flex items-center align-center rounded-full bg-color-accent px-4 py-2 w-fit"
-      >
-        <p class="text-white font-bold w-1/4 text-lg">Engagement</p>
-      </div>
-      <div class="flex justify-center">
-        <div id="chart"/>
-      </div>
-      <div class="flex justify-between">
-        <div class="flex flex-col">
-          <div class="flex">
-            <p class="text-md font-">Completed by</p>
-          </div>
-          <div class="">
-            <p class="text-xl font-light text-zinc-500">
-              <strong class="text-black">
-                {data.session.completed}
-              </strong>
-              / {data.session.participants}
-            </p>
-          </div>
+  <div
+    class="flex flex-col bg-white text-color-text p-6 rounded-lg justify-between"
+  >
+    <div
+      class="flex items-center align-center rounded-full bg-color-accent px-4 py-2 w-fit"
+    >
+      <p class="text-white font-bold w-1/4 text-lg">Engagement</p>
+    </div>
+    <div class="flex justify-center">
+      <div id="chart" />
+    </div>
+    <div class="flex justify-between">
+      <div class="flex flex-col">
+        <div class="flex">
+          <p class="text-md font-">Completed by</p>
+        </div>
+        <div class="">
+          <p class="text-xl font-light text-zinc-500">
+            <strong class="text-black">
+              {data.session.completed}
+            </strong>
+            / {data.session.participants}
+          </p>
         </div>
       </div>
-      <div class="flex justify-between mt-4">
-        <div class="flex flex-col">
-          <div class="flex">
-            <p class="text-md font-">Feedback submitted</p>
-          </div>
-          <div class="">
-            <p class="text-xl font-light text-zinc-500">
-              <strong class="text-black">
-                {written}
-              </strong>
-              / {data.session.completed}
-            </p>
-          </div>
+    </div>
+    <div class="flex justify-between mt-4">
+      <div class="flex flex-col">
+        <div class="flex">
+          <p class="text-md font-">Feedback submitted</p>
+        </div>
+        <div class="">
+          <p class="text-xl font-light text-zinc-500">
+            <strong class="text-black">
+              {written}
+            </strong>
+            / {data.session.completed}
+          </p>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="flex flex-col bg-white text-color-text p-6 rounded-lg justify-between h-fit col-span-2"
+  >
+    <div
+      class="flex items-center align-center rounded-full bg-color-accent px-3 py-2 mb-4 w-fit"
+    >
+      <p class="text-white font-bold w-fit text-md">Recent feedback</p>
+    </div>
+    {#if data.completedForms[0] != undefined}
+      <div class="divide-y divide-gray-200">
+        {#each data.completedForms.slice(-3).reverse() as form}
+          <div
+            class="flex flex-horizontal items-center divide-x divide-gray-200 py-2"
+          >
+            <div class="flex justify-center w-24 py-2">
+              <div
+                class="bg-{form.type} font-semibold rounded-full flex items-center justify-center w-10 h-10 text-2xl text-white"
+              >
+                {form.score}
+              </div>
+            </div>
+            <div class="px-2">
+              <div class="text-gray-700 mb-1">
+                Team {form.department}
+              </div>
+              <div class="h-full">{form.custom[0].custom}</div>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {:else}
+      <h1 class="flex justify-start items-center text-xl mt-6 text-color-text">
+        No feedback to display
+      </h1>
+    {/if}
   </div>
 </div>
