@@ -19,7 +19,7 @@
     <div class="dropdown inline-block relative">
       <button
         class="inline-flex items-center"
-        on:click={() => goto("auth/logout")}
+        on:click={() => goto("/auth/logout")}
       >
         <iconify-icon
           icon="uil:exit"

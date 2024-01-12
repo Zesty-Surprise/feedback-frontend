@@ -4,10 +4,10 @@ import { fetchAPI } from '$lib/functions.js';
 /** @type {import('./$types').PageLoad} */
 export const load: LayoutServerLoad = async (event) => {
     let data = await event.parent()
-    
 
     let response = await fetchAPI(`sessions/${event.params.slug}`, "GET", event.cookies.get("access_token") ?? "")
     let json = await response.json();
+
     let template = await fetchAPI(`templates/${json.template}`, "GET", event.cookies.get("access_token") ?? "")
     let templateJson = await template.json()
 
