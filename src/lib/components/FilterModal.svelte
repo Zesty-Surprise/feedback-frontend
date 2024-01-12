@@ -1,216 +1,84 @@
 <script lang="ts">
     export let showModal: Boolean;
+    export let previousFilter: string;
 
     import { createEventDispatcher } from "svelte";
+    import Modal from "$lib/components/Generic/Modal.svelte";
 
-    let checkedCheckboxes: String;
+    let checkedBox: string = previousFilter || "";
+    let checkedBoxToUncheck: string = previousFilter || "";
     const dispatch = createEventDispatcher();
 
     function handleCheckbox() {
-        dispatch("checkboxesChanged", checkedCheckboxes);
+        dispatch("checkboxesChanged", checkedBox);
     }
 
     function setModal() {
         showModal = !showModal;
     }
+
+    let showSurveyModal = true;
+
+    const departments = [
+        "IT",
+        "Production",
+        "People",
+        "Campus",
+        "Finance",
+        "Gifts",
+        "Innovation",
+        "E-commerce",
+        "Customer service",
+        "Purchase",
+    ];
 </script>
 
-<div class="modal__wrapper">
-    <div class="modal">
-        <div class="modal__close">
-            <button on:click={setModal}>
-                <img src="/images/close.svg" alt="" /></button
-            >
-        </div>
-        <div class="modal__title">
-            <h1>Filter by team</h1>
-            <h2>Teams</h2>
-        </div>
-        <div class="modal__options">
-            <div class="modal__option-column">
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="it"
-                    value="IT"
-                    id="it"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="it">IT</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="production"
-                    value="Production"
-                    id="production"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="production">Production</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="people"
-                    value="People"
-                    id="people"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="people">People</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="campus"
-                    value="Campus"
-                    id="campus"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="campus">Campus</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="finance"
-                    value="Finance"
-                    id="finance"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="finance">Finance</label>
-            </div>
-
-            <div class="modal__option-column">
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="gifts"
-                    value="Gifts"
-                    id="gifts"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="gifts">Gifts</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="innovation"
-                    value="Innovation"
-                    id="innovation"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="innovation">Innovation</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="ecommerce"
-                    value="E-commerce"
-                    id="ecommerce"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="ecommerce">E-commerce</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="customerService"
-                    value="Customer Service"
-                    id="customerService"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="customerService">Customer service</label>
-
-                <input
-                    type="radio"
-                    class="modalCheckbox"
-                    name="purchase"
-                    value="Purchase"
-                    id="purchase"
-                    bind:group={checkedCheckboxes}
-                />
-                <label for="purchase">Purchase</label>
-            </div>
-        </div>
-        <div class="modal__apply">
-            <button class="button__light" on:click={setModal}>Cancel</button>
-            <button
-                class="button"
-                on:click={() => {
-                    setModal(), handleCheckbox();
-                }}>Apply</button
-            >
-        </div>
+<Modal bind:showModal={showSurveyModal}>
+    <div class="pt-5">
+        <h1 class="pl-10 font-semibold">Filter by team</h1>
     </div>
-</div>
+    <div class="pl-20 py-10 grid grid-cols-2 gap-x-8">
+        {#each departments as department}
+            <input
+                type="checkbox"
+                class=""
+                name={department}
+                value={department}
+                id={department}
+                checked={checkedBoxToUncheck == department}
+                on:click={() => {
+                    if (checkedBox == department) {
+                        checkedBox = "";
+                    } else {
+                        checkedBox = department;
+                        checkedBoxToUncheck = department;
+                    }
+                }}
+            />
+            <label
+                for={department}
+                class="mb-[15px] cursor-pointer flex relative pl-[35px] items-center"
+                >{department}</label
+            >
+        {/each}
+    </div>
+    <div class="flex justify-center space-x-32">
+        <button
+            class="text-white bg-gray-300 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+            on:click={setModal}>Cancel</button
+        >
+        <button
+            class="text-white bg-color-accent hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+            on:click={() => {
+                setModal(), handleCheckbox();
+            }}>Apply</button
+        >
+    </div>
+</Modal>
 
 <style>
-    .modal__wrapper {
-        align-items: center;
-        background-color: rgba(200, 200, 200, 0.25);
-        display: flex;
-        height: 100vh;
-        justify-content: center;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 100vw;
-        z-index: 10;
-    }
-
-    .modal {
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        height: fit-content;
-        left: 15px;
-        max-width: 650px;
-        padding: 24px;
-        position: relative;
-        width: 100%;
-    }
-
-    .modal__close {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .modal__title {
-        color: #595959;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-    }
-
-    .modal__title h1 {
-        font-size: xx-large;
-        margin-left: 45px;
-    }
-
-    .modal__title h2 {
-        font-size: x-large;
-        margin-bottom: 24px;
-        margin-left: 45px;
-    }
-
-    .modal__options {
-        color: black;
-        display: flex;
-        gap: 64px;
-        left: 15px;
-        margin-bottom: 40px;
-        position: relative;
-    }
-
-    input[type="radio"] {
+    input[type="checkbox"] {
         display: none;
-    }
-
-    label {
-        cursor: pointer;
-        display: flex;
-        position: relative;
-        padding-left: 30px;
-        align-items: center;
     }
 
     label:before {
@@ -218,10 +86,11 @@
         border-radius: 5px;
         border: 3px solid black;
         content: "";
-        display: inline-block;
+        display: block; /* Change from inline-block to block */
         height: 36px;
-        margin-right: 16px;
+        left: -25px;
         width: 36px;
+        position: absolute;
     }
 
     label:after {
@@ -230,60 +99,14 @@
         content: "\2714";
         font-family: "Arial", sans-serif;
         font-size: 32px;
-        left: 48px;
+        left: -8px;
         position: absolute;
-        top: 20px;
+        top: 10px;
         transform: translate(-50%, -50%) scale(0);
         transition: transform 0.3s ease;
     }
 
     input:checked + label:after {
         transform: translate(-50%, -50%) scale(1);
-    }
-
-    .modal__apply {
-        display: flex;
-        justify-content: space-evenly;
-    }
-
-    .modal__options::after {
-        background-color: rgba(217, 217, 217, 0.71);
-        bottom: -30px;
-        content: "";
-        height: 1px;
-        left: -15px;
-        position: absolute;
-        width: 100%;
-    }
-
-    .modal__option-column {
-        display: flex;
-        flex-direction: column;
-        gap: 13px;
-    }
-
-    .button {
-        background-color: #de896e;
-        border-radius: 45px;
-        padding: 10px 74px;
-        transition: 0.3s;
-        width: fit-content;
-    }
-
-    .button:hover {
-        opacity: 75%;
-    }
-
-    .button__light {
-        border-radius: 45px;
-        border: 1px solid #595959;
-        color: #595959;
-        padding: 10px 74px;
-        transition: 0.3s;
-        width: fit-content;
-    }
-
-    .button__light:hover {
-        background-color: lightgray;
     }
 </style>
