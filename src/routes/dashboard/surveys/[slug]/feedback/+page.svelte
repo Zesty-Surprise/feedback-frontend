@@ -95,7 +95,33 @@
             <div class="text-gray-700 mb-1">
               Team {form.department}
             </div>
-            <div class="h-full">{form.custom[0].custom}</div>
+            {#if form.custom.length === 0}
+              <div class="h-full italic">Survey Form has no Feedback</div>
+            {:else}
+              {#each form.custom as questions}
+                <div class="flex flex-col mb-1">
+                  {#if data.template.detail !== "Forbidden"}
+                    {#each data.template.components as comp}
+                      {#if comp.id === questions.id}
+                        <p class="text-xs">
+                          Question {questions.id - 1}: "{comp.custom_text}"
+                        </p>
+                      {/if}
+                    {/each}
+                  {:else}
+                    <p class="text-xs">
+                      Question {questions.id - 1}
+                    </p>
+                  {/if}
+                  {#if questions.custom === ""}
+                    <p class="text-xs italic">Question left empty</p>{:else}
+                    <p class="text-xs">
+                      Answer: {questions.custom}
+                    </p>
+                  {/if}
+                </div>
+              {/each}
+            {/if}
           </div>
         </div>
       {/each}

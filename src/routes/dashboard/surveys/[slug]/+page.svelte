@@ -3,7 +3,8 @@
   import Plotly from "plotly.js-dist-min";
   import ApexCharts from "apexcharts";
   import { fetchAPI } from "$lib/functions";
-  import { error } from "@sveltejs/kit";
+  import { onMount } from "svelte";
+
   let showDeployModal = false;
   export let data: any;
 
@@ -38,6 +39,7 @@
   });
 
   let written = 0;
+
   data.session.forms.forEach((element: any) => {
     if (element.completed) {
       if (element.custom.length > 0) {
@@ -56,8 +58,16 @@
     }
   }
 
-  setTimeout(() => {
-    var data = [
+  function engagementGauge() {
+    if (engagement < 50) {
+      return "#fe5252";
+    } else {
+      return "#00c100";
+    }
+  }
+
+  onMount(() => {
+    let data = [
       {
         domain: { x: [0, 1], y: [0, 1] },
         value: enps,
@@ -73,31 +83,24 @@
       },
     ];
 
-    var layout = {
+    let layout = {
       width: 350,
       height: 135,
       margin: { t: 0, b: 0 },
     };
 
-    Plotly.newPlot("enpsChart", data, layout);
-  }, 0);
-
-  setTimeout(() => {
-    var options = {
+    let options = {
       chart: {
         height: 200,
         type: "radialBar",
       },
-
       series: [engagement],
-
       plotOptions: {
         radialBar: {
           hollow: {
             margin: 15,
             size: "70%",
           },
-
           dataLabels: {
             showOn: "always",
             name: {
@@ -114,44 +117,49 @@
           },
         },
       },
-
       fill: {
-        colors: ["#DE896E"],
+        colors: [engagementGauge],
         opacity: 0.9,
         type: "solid",
       },
-
       stroke: {
         lineCap: "round",
       },
       labels: ["Progress"],
     };
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
+
+    setTimeout(() => {
+      Plotly.newPlot("enpsChart", data, layout);
+      let chart = new ApexCharts(document.getElementById("chart"), options);
+      chart.render();
+    }, 50);
   });
 </script>
 
-<Modal bind:showModal={showDeployModal}>
-  <p slot="header" class="text-color-text font-semibold text-center">
-    Are you sure you want to deploy this session?
-  </p>
-  <div class="pt-3 pb-2 self-center flex justify-center gap-5">
-    <button
-      class="text-white bg-green-500 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
-      type="submit"
-      on:click={deployForms}
-    >
-      Deploy
-    </button>
-    <button
-      class="text-white bg-red-300 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
-      type="submit"
-      on:click={toggleDeployModal}
-    >
-      Cancel
-    </button>
-  </div>
-</Modal>
+{#if data.filter !== undefined}
+  <Modal bind:showModal={showDeployModal}>
+    <p slot="header" class="text-color-text font-semibold text-center">
+      Are you sure you want to deploy this session?
+    </p>
+    <div class="pt-3 pb-2 self-center flex justify-center gap-5">
+      <button
+        class="text-white bg-green-500 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+        type="submit"
+        on:click={deployForms}
+      >
+        Deploy
+      </button>
+      <button
+        class="text-white bg-red-300 hover:brightness-90 transition duration-200 focus:outline-none font-medium rounded-full text-md px-6 py-2 text-center"
+        type="submit"
+        on:click={toggleDeployModal}
+      >
+        Cancel
+      </button>
+    </div>
+  </Modal>
+{/if}
+
 <div class="grid grid-cols-2 auto-rows-min gap-4 m-5">
   <div
     class="flex flex-col bg-white text-color-text p-6 rounded-lg justify-between h-fit"
@@ -162,20 +170,22 @@
       >
         <p class="text-white font-bold text-lg">eNPS</p>
       </div>
-      {#if data.session.deployed}
-        <div
-          class="text-orange-500 border-solid border-2 border-orange-500 hover:bg-orange-200 transition duration-200 focus:outline-none font-medium rounded-xl text-md px-6 py-2 text-center"
-        >
-          Emails Sent
-        </div>
-      {:else}
-        <button
-          class="text-green-500 border-solid border-2 border-green-500 hover:bg-green-200 transition duration-200 focus:outline-none font-medium rounded-xl text-md px-6 py-2 text-center"
-          type="submit"
-          on:click={toggleDeployModal}
-        >
-          Send emails
-        </button>
+      {#if data.filter === null}
+        {#if data.session.deployed}
+          <div
+            class="text-orange-500 border-solid border-2 border-orange-500 hover:bg-orange-200 transition duration-200 focus:outline-none font-medium rounded-xl text-md px-6 py-2 text-center"
+          >
+            Emails Sent
+          </div>
+        {:else}
+          <button
+            class="text-green-500 border-solid border-2 border-green-500 hover:bg-green-200 transition duration-200 focus:outline-none font-medium rounded-xl text-md px-6 py-2 text-center"
+            type="submit"
+            on:click={toggleDeployModal}
+          >
+            Send emails
+          </button>
+        {/if}
       {/if}
     </div>
     <div class="flex justify-center m-10">
@@ -189,7 +199,9 @@
         <div class="flex">
           <p class="text-2xl font-light text-zinc-500">
             <strong class="text-color-text text-5xl">
-              {(sum / data.session.forms.length).toFixed(1)}
+              {data.session.completed > 0
+                ? (sum / data.session.completed).toFixed(1)
+                : "0"}
             </strong>
             / 10
           </p>
@@ -294,7 +306,34 @@
               <div class="text-gray-700 mb-1">
                 Team {form.department}
               </div>
-              <div class="h-full">{form.custom[0].custom}</div>
+
+              {#if form.custom.length === 0}
+                <div class="h-full italic">Survey Form has no Feedback</div>
+              {:else}
+                {#each form.custom as questions}
+                  <div class="flex flex-col mb-1">
+                    {#if data.template.detail !== "Forbidden"}
+                      {#each data.template.components as comp}
+                        {#if comp.id === questions.id}
+                          <p class="text-xs">
+                            Question {questions.id - 1}: "{comp.custom_text}"
+                          </p>
+                        {/if}
+                      {/each}
+                    {:else}
+                      <p class="text-xs">
+                        Question {questions.id - 1}
+                      </p>
+                    {/if}
+                    {#if questions.custom === ""}
+                      <p class="text-xs italic">Question left empty</p>{:else}
+                      <p class="text-xs">
+                        Answer: {questions.custom}
+                      </p>
+                    {/if}
+                  </div>
+                {/each}
+              {/if}
             </div>
           </div>
         {/each}
