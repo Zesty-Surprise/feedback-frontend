@@ -95,7 +95,25 @@
             <div class="text-gray-700 mb-1">
               Team {form.department}
             </div>
-            <div class="h-full">{form.custom[0].custom}</div>
+            {#if form.custom.length === 0}
+              <div class="h-full italic">Survey Form has no Feedback</div>
+            {:else}
+              {#each form.custom as questions}
+                <div class="flex flex-row">
+                  {#each data.template.components as comp}
+                    {#if comp.id === questions.id}
+                      {comp.custom_text}
+                    {/if}
+                  {/each}
+                  :
+                  {#if questions.custom === ""}
+                    <p class=" text-zinc-500 italic ml-1">empty</p>{:else}
+                    {questions.custom}
+                  {/if}
+                </div>
+              {/each}
+              <!-- <div class="h-full">{form.custom[0].custom}</div> -->
+            {/if}
           </div>
         </div>
       {/each}

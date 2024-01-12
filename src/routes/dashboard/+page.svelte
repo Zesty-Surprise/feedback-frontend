@@ -1,21 +1,16 @@
 <script lang="ts">
   import Plotly from "plotly.js-dist-min";
+  import { onMount } from "svelte";
 
   export let data;
+  let latestSession: any;
 
-  let latestSession = data.sessions[data.sessions.length - 1];
-
-  let promoters = latestSession.promoters;
-  let demoters = latestSession.demoter;
-  let passives = latestSession.passive;
-
-  let total = promoters + demoters + passives;
-
-  let promotersPercent = promoters ? (promoters / total) * 100 : 0;
-  let demotersPercent = demoters ? (demoters / total) * 100 : 0;
-  let passivesPercent = passives ? (passives / total) * 100 : 0;
-
-  let enps = latestSession.score;
+  let loaded = false;
+  let total: number = 0;
+  let enps: number = 0;
+  let promotersPercent: number;
+  let demotersPercent: number;
+  let passivesPercent: number;
 
   function getGaugeColor() {
     if (enps <= 0) {
@@ -27,87 +22,116 @@
     }
   }
 
-  setTimeout(() => {
-    var data = [
-      {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: enps,
-        title: { text: "eNPS" },
-        type: "indicator",
-        mode: "gauge+number",
-        delta: { reference: 75 },
-        gauge: {
-          axis: { range: [-100, 100] },
-          bar: { color: getGaugeColor(), thickness: 1 },
-          steps: [{ range: [-100, 100], color: "white" }],
-          bordercolor: "transparent",
-        },
-      },
-    ];
+  const calculateScores = () => {
+    if (latestSession) {
+      const promoters = latestSession.promoters;
+      const demoters = latestSession.demoter;
+      const passives = latestSession.passive;
 
-    var layout = {
-      width: 550,
-      height: 325,
-      margin: { t: 0, b: 0 },
-      paper_bgcolor: "#FCF8F4",
-    };
+      total = latestSession.completed;
+      enps = latestSession.score;
 
-    Plotly.newPlot("chart", data, layout);
-  }, 0);
+      promotersPercent = promoters ? (promoters / total) * 100 : 0;
+      demotersPercent = demoters ? (demoters / total) * 100 : 0;
+      passivesPercent = passives ? (passives / total) * 100 : 0;
+
+      loaded = true;
+
+      setTimeout(() => {
+        var data = [
+          {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: enps,
+            title: { text: "eNPS" },
+            type: "indicator",
+            mode: "gauge+number",
+            delta: { reference: 75 },
+            gauge: {
+              axis: { range: [-100, 100] },
+              bar: { color: getGaugeColor(), thickness: 1 },
+              steps: [{ range: [-100, 100], color: "white" }],
+              bordercolor: "transparent",
+            },
+          },
+        ];
+
+        var layout = {
+          width: 550,
+          height: 325,
+          margin: { t: 0, b: 0 },
+          paper_bgcolor: "#FCF8F4",
+        };
+
+        Plotly.newPlot("chart", data, layout);
+      }, 0);
+    }
+  };
+
+  onMount(() => {
+    latestSession = data.sessions[data.sessions.length - 1];
+    calculateScores();
+  });
 </script>
 
 <div class="homepage">
-  <div class="homepage__enps">
-    <h1>{latestSession.title}</h1>
-  </div>
-  <div class="homepage__info">
-    <div class="homepage__pie-chart-wrapper">
-      <!-- <div class="homepage__pie-chart" bind:this={chartElement} /> -->
-      <div id="chart" style="background: none" />
+  {#if !loaded}
+    <div class="relative mt-10 px-10 text-zinc-600">
+      <h1 class="block text-xl font-medium">No recent surveys!</h1>
+      <p class="text-xs">Create a survey for latest overview data</p>
     </div>
-    <!-- second column -->
-    <div class="homepage__stats">
-      <div>
-        <!-- Content for the first column -->
+  {:else}
+    <div class="homepage__enps">
+      <h1>{latestSession.title}</h1>
+    </div>
+    <div class="homepage__info">
+      <div class="homepage__pie-chart-wrapper">
+        <!-- <div class="homepage__pie-chart" bind:this={chartElement} /> -->
+        <div id="chart" style="background: none" />
+      </div>
+      <!-- second column -->
+      <div class="homepage__stats">
+        <div>
+          <!-- Content for the first column -->
+          <div class="homepage__bar">
+            <div class="homepage__colour green" />
+            <div class="homepage__percentage">
+              <p>{promotersPercent.toFixed(1)}%</p>
+            </div>
+            <div class="homepage__type">
+              <p>Promoters (9-10)</p>
+            </div>
+          </div>
+        </div>
+
         <div class="homepage__bar">
-          <div class="homepage__colour green" />
+          <div class="homepage__colour grey" />
           <div class="homepage__percentage">
-            <p>{promotersPercent.toFixed(1)}%</p>
+            <p>{passivesPercent.toFixed(1)}%</p>
           </div>
           <div class="homepage__type">
-            <p>Promoters (9-10)</p>
+            <p>Neutrals (7-8)</p>
+          </div>
+        </div>
+
+        <div class="homepage__bar">
+          <div class="homepage__colour red" />
+          <div class="homepage__percentage">
+            <p>{demotersPercent.toFixed(1)}%</p>
+          </div>
+          <div class="homepage__type">
+            <p>Detractors (1-6)</p>
           </div>
         </div>
       </div>
-
-      <div class="homepage__bar">
-        <div class="homepage__colour grey" />
-        <div class="homepage__percentage">
-          <p>{passivesPercent.toFixed(1)}%</p>
-        </div>
-        <div class="homepage__type">
-          <p>Neutrals (7-8)</p>
-        </div>
-      </div>
-
-      <div class="homepage__bar">
-        <div class="homepage__colour red" />
-        <div class="homepage__percentage">
-          <p>{demotersPercent.toFixed(1)}%</p>
-        </div>
-        <div class="homepage__type">
-          <p>Detractors (1-6)</p>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="homepage__completed-by">
-    <span
-      >Completed by <strong
-        >{latestSession.completed}/{latestSession.participants}
-      </strong>participants</span
-    >
-  </div>
+    <div class="homepage__completed-by">
+      <span
+        >Completed by <strong
+          >{latestSession.completed}/{latestSession.participants}
+        </strong>participants</span
+      >
+    </div>
+  {/if}
 </div>
 
 <style>

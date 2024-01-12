@@ -57,7 +57,13 @@
   <!-- Router Slot -->
   <slot />
   <!-- ---- / ---- -->
-  <svelte:fragment slot="footer">Footer</svelte:fragment>
+  <!-- <svelte:fragment slot="footer">
+    <div class="w-full h-10 flex justify-center">
+      <p class="text-xs text-color-text_light">
+        ©2024 eNPS Survey Manger™. All Rights Reserved.
+      </p>
+    </div>
+  </svelte:fragment> -->
   <!-- (footer) -->
 </AppShell>
 

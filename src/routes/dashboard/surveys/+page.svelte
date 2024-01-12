@@ -3,10 +3,11 @@
   import Modal from "$lib/components/Generic/Modal.svelte";
   import Survey from "$lib/components/Surveys/Survey.svelte";
   import { fetchAPI } from "$lib/functions";
-  import { InputChip } from "@skeletonlabs/skeleton";
-  import { destinations, emptySurvey } from "./types";
+  import { emptySurvey } from "./types";
   import CreateSurveyForm from "$lib/components/Surveys/CreateSurveyForm.svelte";
   export let data: any;
+
+  let err: { fail: boolean; msg: string } = { fail: false, msg: "" };
 
   let showSurveyModal = false;
   let showDeleteModal = false;
@@ -15,13 +16,17 @@
 
   const toggleSurveyModal = () => {
     showSurveyModal = !showSurveyModal;
-  }
+  };
   const toggleDeleteModal = () => {
     showDeleteModal = !showDeleteModal;
-  }
+  };
+  const emailRegex = new RegExp(
+    /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  );
 
   let isValidEmail = (value: string): boolean => {
-    return value.includes("@") && value.includes(".");
+    if (emailRegex.test(value) && value.includes(".com")) return true;
+    return false;
   };
 
   let clearSurvey = () => {
@@ -36,6 +41,7 @@
       emails: [],
       deployed: false,
     };
+    err = { fail: false, msg: "" };
   };
 
   let handleSubmit = async () => {
@@ -44,11 +50,14 @@
       !survey.template._id ||
       !survey.template.name ||
       !Array.isArray(survey.emails) ||
-      survey.emails.length === 0 ||
-      !survey.emails.every((email) => isValidEmail(email))
+      survey.emails.length === 0
     ) {
-      alert("Invalid survey submission");
-      clearSurvey();
+      err = { fail: true, msg: "Invalid survey submission" };
+      return;
+    }
+
+    if (!survey.emails.every((email) => isValidEmail(email))) {
+      err = { fail: true, msg: "Invalid email provided!" };
       return;
     }
 
@@ -91,17 +100,10 @@
     {/each}
   </div>
 {/if}
-  <Modal bind:showModal={showSurveyModal}>
-    <p slot="header" class="text-color-text font-semibold">
-      Create a new survey
-    </p>
-    <CreateSurveyForm
-      {handleSubmit}
-      {survey}
-      templates={data.templates}
-      recipientLists={destinations}
-    />
-  </Modal>
+<Modal bind:showModal={showSurveyModal}>
+  <p slot="header" class="text-color-text font-semibold">Create a new survey</p>
+  <CreateSurveyForm {handleSubmit} {survey} templates={data.templates} {err} />
+</Modal>
 
 <Modal bind:showModal={showDeleteModal}>
   <p slot="header" class="text-color-text font-semibold text-center">

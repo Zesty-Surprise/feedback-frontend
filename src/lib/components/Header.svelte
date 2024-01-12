@@ -1,4 +1,5 @@
 <script>
+  import { goto } from "$app/navigation";
   import "iconify-icon";
 </script>
 
@@ -16,18 +17,17 @@
   </div>
   <div class="header__login">
     <div class="dropdown inline-block relative">
-      <a href="/auth/logout"> </a>
-      <button class="inline-flex items-center">
-        <img src="/images/User.svg" alt="Login" />
+      <button
+        class="inline-flex items-center"
+        on:click={() => goto("auth/logout")}
+      >
+        <iconify-icon
+          icon="uil:exit"
+          height="30"
+          width="30"
+          class="mt-1 text-color-black hover:text-color-accent"
+        />
       </button>
-      <ul class="dropdown-menu absolute hidden text-color-accent -left-14">
-        <li class="">
-          <a
-            class="rounded-b bg-color-highlight hover:bg-color-hover py-2 px-4 block whitespace-no-wrap text-sm font-bold"
-            href="/auth/logout">Log Out</a
-          >
-        </li>
-      </ul>
     </div>
   </div>
 </div>

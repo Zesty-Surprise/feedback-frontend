@@ -9,29 +9,3 @@ export let emptySurvey = {
     emails: [],
     deployed: false,
 };
-
-export let destinations = [
-  {
-    name: "all",
-    recipients : [
-      "example@.com",
-      "example@.com",
-      "example@.com",
-      "example@.com",
-      "example@.com",
-      "example@.com",
-      "example@.com",
-      "example@.com",
-      "example@.com",
-    ],
-  },
-  {
-    name: "dev",
-    recipients : [
-      "d.aleksasins@gmail.com",
-      "boriskamstra34@gmail.com",
-      "axel.zublena@gmail.com",
-      "stoi0003@hz.nl",
-    ],
-  }
-];

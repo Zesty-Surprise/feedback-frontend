@@ -7,6 +7,8 @@
   let showDeployModal = false;
   export let data: any;
 
+  console.log(data.completedForms);
+
   const toggleDeployModal = () => {
     showDeployModal = !showDeployModal;
   };
@@ -38,6 +40,7 @@
   });
 
   let written = 0;
+
   data.session.forms.forEach((element: any) => {
     if (element.completed) {
       if (element.custom.length > 0) {
@@ -51,6 +54,14 @@
       return "#de896e";
     } else if (enps < 20 && enps >= 1) {
       return "yellow";
+    } else {
+      return "#00c100";
+    }
+  }
+
+  function engagementGauge() {
+    if (engagement < 50) {
+      return "#fe5252";
     } else {
       return "#00c100";
     }
@@ -116,7 +127,7 @@
       },
 
       fill: {
-        colors: ["#DE896E"],
+        colors: [engagementGauge],
         opacity: 0.9,
         type: "solid",
       },
@@ -126,7 +137,7 @@
       },
       labels: ["Progress"],
     };
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    var chart = new ApexCharts(document.getElementById("chart"), options);
     chart.render();
   });
 </script>
@@ -189,7 +200,9 @@
         <div class="flex">
           <p class="text-2xl font-light text-zinc-500">
             <strong class="text-color-text text-5xl">
-              {(sum / data.session.forms.length).toFixed(1)}
+              {(sum / data.session.completed).toFixed(1)
+                ? (sum / data.session.completed).toFixed(1)
+                : "0"}
             </strong>
             / 10
           </p>
@@ -294,7 +307,26 @@
               <div class="text-gray-700 mb-1">
                 Team {form.department}
               </div>
-              <div class="h-full">{form.custom[0].custom}</div>
+
+              {#if form.custom.length === 0}
+                <div class="h-full italic">Survey Form has no Feedback</div>
+              {:else}
+                {#each form.custom as questions}
+                  <div class="flex flex-row">
+                    {#each data.template.components as comp}
+                      {#if comp.id === questions.id}
+                        {comp.custom_text}
+                      {/if}
+                    {/each}
+                    :
+                    {#if questions.custom === ""}
+                      <p class=" text-zinc-500 italic ml-1">empty</p>{:else}
+                      {questions.custom}
+                    {/if}
+                  </div>
+                {/each}
+                <!-- <div class="h-full">{form.custom[0].custom}</div> -->
+              {/if}
             </div>
           </div>
         {/each}
